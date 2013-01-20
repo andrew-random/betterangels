@@ -1,0 +1,275 @@
+body {
+	background:#ccc;
+	font-family:verdana;
+	font-size:10px;
+}
+h1 {
+	margin:0;
+	padding:10px 0 10px 20px;
+	font-size:12px;
+	border-top:1px solid #000;
+	border-bottom:1px solid #000;
+	font-variant:small-caps;
+}
+h2 {
+	margin:0;
+	padding:0;
+	font-size:16px;
+}
+p {
+	margin:0;
+	padding:0;
+}
+
+textarea {
+	width:100%;
+}
+
+
+.error {
+	color:red;
+}
+.success {
+	color:green;
+}
+.hidden {
+	display:none;
+}
+
+#characterGenerator {
+	border:1px solid #000;
+	width:800px;
+	background:#fff;
+	margin:0 auto;
+	position:relative;
+
+}
+
+#characterGenerator .characterHeader {
+	padding:5px;
+}
+#characterGenerator .characterHeader .label {
+	display:inline-block;
+	margin-right:5px;
+}
+#characterGenerator .statGroup {
+	border-top:1px solid #000;
+	border-bottom:1px solid #000;
+}
+#characterGenerator .statGroup.StrengthPride {
+
+	border-left:2px solid #000;
+	border-right:2px solid #000;
+}
+#characterGenerator .statContainer {
+	width:250px;
+	font-size:14px;
+	padding:10px 7px;
+	position:relative;
+}
+#characterGenerator .statContainer.major {
+	background:#fff;
+	padding-top:20px;
+	padding-bottom:20px;
+	float:left;
+}
+#characterGenerator .statContainer.minor {
+	margin-top:30px;
+}
+#characterGenerator .left .statContainer {
+	float:left;
+}
+#characterGenerator .right .statContainer {
+	float:right;
+}
+#characterGenerator .stat {
+	position:relative;
+}
+#characterGenerator .stat .dots span {
+	display:block;
+	font-size:14px;
+	text-decoration:none !important;
+	width:20px;
+	height:20px;
+	text-align:center;
+	background-repeat:no-repeat;
+	background-position: 0 0;
+	background-image: url('../_img/dotEmpty.png');
+	margin:2px;
+}
+#characterGenerator .stat.upper .dots span.checked {
+	background-image: url('../_img/dotEvil.png');
+}
+#characterGenerator .stat.lower .dots span.checked {
+	background-image: url('../_img/dotGood.png');
+}
+#characterGenerator .major .stat .label {
+	font-weight:bold;
+}
+#characterGenerator .stat.upper {
+	padding-left:40px;
+}
+#characterGenerator .stat.upper .label {
+	text-align:left;
+}
+#characterGenerator .stat.upper .dots span {
+	float:left;
+}
+
+#characterGenerator .stat.lower {
+	padding-right:40px;
+}
+#characterGenerator .stat.lower .label {
+	text-align:right;
+}
+#characterGenerator .stat.lower .dots span {
+	float:right;
+}
+#characterGenerator .statContainer .controls {
+	clear:both;
+	height:40px;
+	background: #eee;
+	border: 1px solid #333;
+	padding:10px;
+	border-radius: 10px;
+	margin-top:10px;
+}
+#characterGenerator .statContainer .controls span {
+	font-size:9px;
+	display:block;
+	text-align: right;
+}
+#characterGenerator .statContainer .controls .evil span {
+	text-align: left;
+}
+#characterGenerator .statContainer .controls .good {
+	float:right;
+	width:100px;
+	position:relative;
+	padding-top:10px;
+}
+#characterGenerator .statContainer .controls .good .add {
+	position:absolute;
+	top:0px;
+	right:0;
+	width:30px;
+}
+#characterGenerator .statContainer .controls .good .remove {
+	position:absolute;
+	top:20px;
+	right:0;
+	width:30px;
+}
+#characterGenerator .statContainer .controls .evil {
+	float:left;
+	width:100px;
+	position:relative;
+	text-align: right;
+	padding-top:10px;
+}
+#characterGenerator .statContainer .controls .evil .add {
+	position:absolute;
+	top:0px;
+	left:0;
+	width:30px;
+}
+#characterGenerator .statContainer .controls .evil .remove {
+	position:absolute;
+	top:20px;
+	left:0;
+	width:30px;
+}
+
+#characterGenerator .slide {
+	background:red;
+	position:absolute;
+	top:0;
+	width:20px;
+	height:100px;
+	z-index:15;
+}
+#characterGenerator .slide.slideEvil {
+	left:10px;
+	background: url('_img/left.png') 0 50% no-repeat;
+}
+#characterGenerator .slide.slideGood {
+	right:10px;
+	background: url('_img/right.png') 100% 50% no-repeat;
+
+}
+
+#characterGenerator .characterControls {
+	position:absolute;
+	right:0;
+	top:0;
+	padding:10px;
+}
+#characterGenerator .characterControls select {
+	width:150px;
+}
+#characterGenerator .characterControls #dotCost {
+	display:inline-block;
+	margin-left:10px;
+}
+#characterGenerator #exportData {
+	padding:10px;
+	font-size:9px;
+}
+
+
+#characterGenerator .abilityGroup {
+	float:left;
+	display:block;
+	width:129px;
+}
+#characterGenerator .abilityGroup ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+#characterGenerator .abilityGroup ul li {
+	margin:0;
+	padding:0;
+	list-style:none;
+	text-indent:0;
+}
+
+
+#powerAspectSelector {
+	position:absolute;
+	top:30px;
+	left:20px;
+	margin:0 auto;
+	width:500px;
+	height:500px;
+	border:1px solid #000;
+	border-radius: 10px;
+	display: none;
+}
+
+/*
+ * Amazing Clear Block script
+ */
+
+.clear-block:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clear-block {
+  display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html .clear-block {
+  height: 1%;
+}
+.clear-block {
+  display: block;
+}
+/* End hide from IE-mac */
+
+

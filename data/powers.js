@@ -1,0 +1,7 @@
+// generosity
+cacheData.ability.power.push({
+	'name':'Word of Blessing',
+	'unique_id':'word_of_blessing',
+	'description':'<p>The power of the right word at the right time shouldn\'t be underestimated.</p><p>Someone who looks at you before you step onstage and says, "break a leg," or who says, "I believe in you" before you make that speech, or says, "come home safe" before your shift at the fire station can give you the courage to endure or the faith to see through your anxieties. And those are just mortals. When someone speaks with the words of a heavenly messenger, it\'s like getting clobbered by a sledgehammer of trust and encouragement.</p><p>Someone with the Word of Blessing power activates it by making a PATIENT Knowledge roll. (Because the user must be PATIENT, this power can only be used on someone that the hero knows a bit-a half hour of interaction is sufficient. After that, the roll can be made at any time.) If the roll gets a set, the angel can take one point off any one of its Virtuous Tactics and put it on any other Virtuous Tactic. The Tactic that grows can be the angel\'s or someone else\'s. It can, for example, take a point of its own Courage and transfer it to someone else\'s Nurture. Or it can take its own Knowledge and move it into its Honesty.</p>',
+	'good_tactic':app.ModelCharacter.statGenerosity,
+});

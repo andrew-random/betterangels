@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:fb='http://www.facebook.com/2008/fbml' xmlns:og='http://opengraphprotocol.org/schema/'>
+<head>
+	<title>BA Chargen 0.5</title>
+	<link rel="stylesheet" href="css/app.css" type="text/css" media="all" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="apple-touch-icon" href="_img/icon.png"/>  
+    <link rel="apple-touch-startup-image" href="_img/splash.png" />  
+
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
+
+	<!-- Remote Libraries -->
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+
+	<!-- Libraries -->
+	<script type="text/javascript" src="js/libraries/underscore-min.js"></script>
+	<script type="text/javascript" src="js/libraries/backbone.js"></script>
+	<script type="text/javascript" src="js/libraries/backbone-extend.js"></script>
+	<script type="text/javascript" src="js/libraries/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/libraries/json2.js"></script>
+	<script type="text/javascript" src="js/libraries/energize-min.js"></script>
+	<script type="text/javascript" src="js/libraries/jgestures.min.js"></script>
+	<script type="text/javascript" src="js/libraries/jquery.cookie.js"></script>
+
+	<!-- Core -->
+	<script type="text/javascript" src="js/default.js"></script>
+	<script type="text/javascript" src="js/registry.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/router.js"></script>
+
+	<!-- Models -->
+	<script type="text/javascript" src="js/models/ModelUser.js"></script>
+	<script type="text/javascript" src="js/models/ModelCharacter.js"></script>
+	<script type="text/javascript" src="js/models/ModelSupernaturalAbility.js"></script>
+
+	<!-- Collections -->
+	<script type="text/javascript" src="js/collections/CollectionSupernaturalAbility.js"></script>
+	<script type="text/javascript" src="js/collections/CollectionCharacter.js"></script>
+
+	<!-- Controllers -->
+	<script type="text/javascript" src="js/controllers/ControllerPage.js"></script>
+	<script type="text/javascript" src="js/controllers/ControllerCharacter.js"></script>
+
+	<!-- Views -->
+	<script type="text/javascript" src="js/views/ViewApp.js"></script>
+
+	<script type="text/javascript" src="js/views/ViewPage.js"></script>
+	<script type="text/javascript" src="js/views/ViewPageHome.js"></script>
+	<script type="text/javascript" src="js/views/ViewPageCharacterEditor.js"></script>
+	<script type="text/javascript" src="js/views/ViewPageCharacterList.js"></script>
+	<script type="text/javascript" src="js/views/ViewPageCheatSheet.js"></script>
+	<script type="text/javascript" src="js/views/ViewPageMore.js"></script>
+	<script type="text/javascript" src="js/views/ViewPageDynamic.js"></script>
+
+
+	<script type="text/javascript" src="js/views/ViewCharacterHeader.js"></script>
+	<script type="text/javascript" src="js/views/ViewTactic.js"></script>
+	<script type="text/javascript" src="js/views/ViewCharacterListEntry.js"></script>
+	
+	<script type="text/javascript" src="js/views/ViewTabs.js"></script>
+	<script type="text/javascript" src="js/views/ViewTabTest.js"></script>	
+	<script type="text/javascript" src="js/views/ViewTabAbilities.js"></script>
+	<script type="text/javascript" src="js/views/ViewTabStrategy.js"></script>
+	<script type="text/javascript" src="js/views/ViewTabMore.js"></script>
+	<script type="text/javascript" src="js/views/ViewTabCharacterList.js"></script>
+
+	<script type="text/javascript" src="js/views/ViewDialog.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogLoading.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogPHPMessage.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogAbilitySelector.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogCharacterDetails.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogCharacterImage.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogConfirmDelete.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogTextarea.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogSpecialties.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogImportPregen.js"></script>
+	<script type="text/javascript" src="js/views/ViewDialogFacebookSessionLost.js"></script>
+
+	<script type="text/javascript" src="js/views/ViewFacebookLoginButton.js"></script>
+
+	<!-- Static Data -->
+
+	<script type="text/javascript" src="data/cache.js"></script>
+	
+</head>
+<body>
+
+<div id="fb-root"></div>
+
+<div id="appRoot">
+	
+	<div id="appHeader" class="clear-block">
+		<div id="appTitle">Better Angels</div>
+
+		<div id="appBackButton" class="fauxlink">Back</div>
+
+		<div id="appStatus"></div>
+	</div>
+
+	<div id="appContent"></div>
+
+	<div id="appDialog">
+		<div id="appDialogContent"></div>
+	</div>
+</div>
+
+</body>
+</html>
