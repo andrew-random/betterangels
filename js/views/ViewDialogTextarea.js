@@ -14,7 +14,9 @@ app.ViewDialogTextarea = app.ViewDialog.extend({
 
 	textareaInput: function (event) {
 		var target = $(event.currentTarget);
-		this.textContent = target.val();
+		if (target.val() !== null && this.textContent != target.val()) {
+			this.textContent = target.val();
+		}
 	},
 
 	setTitle: function (value) {
@@ -37,7 +39,6 @@ app.ViewDialogTextarea = app.ViewDialog.extend({
 				this.model.setNotes(this.textContent);
 				hasChanged = true;
 			}
-			
 		}
 
 		if (hasChanged && !this.model.isOwner()) {
@@ -52,16 +53,18 @@ app.ViewDialogTextarea = app.ViewDialog.extend({
 
 	    var container 		= $(this.el);
 	  
+	  	if (this.field == 'notes') {
+			this.textContent = this.model.getNotes();
+		} else {
+			this.textContent = this.model.getDescription();
+		}
+
 	    var html = '';
 
 	    html += '	<h1>' + this.title + '</h1>';
-		html += '	<textarea>';
-		if (this.field == 'notes') {
-			html += this.model.getNotes();
-		} else {
-			html += this.model.getDescription();
-		}
-		html += '</textarea>';
+	    html += '		<div class="textareaWrapper">';
+		html += '		<textarea>' + this.textContent + '</textarea>';
+		html += '	</div>';
 
 	   	html += '<div class="controls one_button">';
 	   	html += '	<div class="fauxlink done">Done</div>';

@@ -1,3 +1,8 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 html, body {
 	width: 100%;
 	height: 100%;
@@ -347,7 +352,7 @@ textarea {
 .characterHeader {
 	display: block;
 	padding:10px;
-	height:50px;
+	height:72px;
 	position:relative;
 	text-decoration: none;
 }
@@ -449,45 +454,84 @@ textarea {
 	margin:0;
 	padding:0;
 }
-.abilityBoxContainer .abilityAdd {
-	float:right;
+.statBlock .statBlockTitle {
+	font-weight: bold;
+	padding-left:10px;
+	position: relative;
+	padding-bottom:5px;
+	border-bottom: 1px solid #ccc;
+}
+.statBlock .statBlockEdit {
+	position: absolute;
+	right:0;
+	top:0;
 	color:#000;
-	line-height: 32px;
-	padding:0 10px;
-	border-radius: 10px;
-	background: #eee;
+	border-radius: 10px 10px 0 0;
 	margin-right:10px;
+	background: #fff url('../img/pencil.png') 5px 50% no-repeat;
+	padding:0 15px 0 25px;
+	font-size:.8em;
+	font-weight: 100;
+	border:1px solid #ccc;
+	border-bottom: none;
+	line-height: 24px;
+}
+.statBlock.editMode .statBlockEdit {
+	background-color: #eee;
+	border:1px solid #000;
+	border-bottom: none;
+}
 
+.abilityDescription {
+	font-size: .8em;
+	padding: 0 10px 0 10px;
+	font-style: italic;
 }
 .abilityBox {
-	border:1px solid #000;
-	margin-top:10px;
+	margin-bottom:5px;
 	display:block;
 	text-decoration: none;
 	color:#000;
 	font-size: .8em;
-	height: 60px;	
+	border: 1px solid #fff;
+	height:60px;
+	overflow: hidden;
 }
-.abilityBoxContainer .abilityTitle {
-	font-weight: bold;
-	padding-left:10px !important;
-	line-height: 34px;
+.abilityBox .ability {
 }
-.abilityDescription {
-	font-size: .8em;
-	padding: 10px 10px 0 10px;
-}
-.abilityBox .fauxlink.ability {
-	color:#000;
-	margin-right:50px;
-}
-.abilityBox .fauxlink.delete {
+.abilityBox .fauxlink.action {
 	height:100%;
 	float:right;
 	width:50px;
 	text-align: center;
+	background:#eee url('../img/pencil.png') 50% 50% no-repeat;
+	display: none;
+}
+.abilityBox .fauxlink.action.delete {
 	background:#eee url('../img/delete.png') 50% 50% no-repeat;
 }
+.abilityBox .fauxlink.action.add {
+	background:#eee url('../img/add.png') 50% 50% no-repeat;
+}
+.abilityBox.new {
+	display: none;
+}
+/**
+ * Edit Mode
+ */
+.editMode .abilityBox {
+	border: 1px dotted #ff0000;
+}
+.editMode .abilityBox.new  {
+	display: block;
+}
+.editMode .abilityBox .ability {
+	margin-right:50px;
+}
+.editMode .abilityBox .fauxlink.action {
+	display: block;
+}
+
 .abilityBox .name {
 	font-weight:bold;
 	padding-left:10px;
@@ -787,7 +831,7 @@ textarea {
 	padding:5px;
 	margin:5px 10px 0 0;
 	border:1px solid #ccc;
-	width:88px;
+	width:45%;
 	text-decoration: none;
 	color:#000;
 }
@@ -905,16 +949,54 @@ textarea {
 	display:block;
 }
 
-.ViewTabMore .statBlock {
-	padding-left:10px;
-	padding-right:10px;
-}
 .ViewTabMore .statBlock .content {
 	font-size: .8em;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:5px;
+}
+.ViewTabMore .statBlock.groupMetaTag label {
+	float: left;
+	display: none;
+	margin-bottom:5px;
+}
+.ViewTabMore .statBlock.groupMetaTag label.active {
+	display: block;
+}
+.ViewTabMore .statBlock.groupMetaTag label input {
+	float: left;
+}
+.ViewTabMore .statBlock.groupMetaTag label span {
+	display: block;
+	margin-left:20px;
+}
+.ViewTabMore .statBlock.groupMetaTag .newMetaTag {
+	display: none;
+}
+
+.ViewTabMore .statBlock.groupMetaTag .newMetaTag .newLabel {
+	float: left;
+}
+/**
+ * Edit Mode
+ */
+.ViewTabMore .statBlock.editMode.groupMetaTag label {
+	display: block;
+	width:33%;
+}
+.ViewTabMore .statBlock.editMode.groupMetaTag .newMetaTag {
+	display: block;
+}
+
+.ViewDialogTextarea .textareaWrapper {
+	position: absolute;
+	top:8%;
+	left:5%;
+	right:5%;
+	bottom:12%;
 }
 .ViewDialogTextarea textarea {
-	height: 350px;
-	width: 100%;
+	height:100%;
 }
 
 #appDialog .loading {
@@ -932,9 +1014,38 @@ textarea {
 }
 
 .specialtyContent {
-	font-size:.8em;
+	padding:5px 10px;
 }
-
+.specialtyContent .slot {
+	margin-bottom:5px;	
+}
+.specialtyContent .slotNumber {
+	float:left;
+	width:10%;
+	font-weight: bold;
+}
+.specialtyContent input {
+	display: none;
+}
+.specialtyContent label {
+	display: block;
+	float:left;
+	width: 90%;
+}
+.specialtyContent .slot.empty {
+	display: none;
+}
+.editMode .specialtyContent input {
+	display: block;
+	float:left;
+	width:90%;
+}
+.editMode .specialtyContent label {
+	display: none;
+}
+.editMode .specialtyContent .slot.empty {
+	display: block;
+}
 
 /**********************
 * Facebook Album Selector
@@ -963,7 +1074,15 @@ textarea {
 .facebookPhotoContainer .fauxlink.album img {
 	vertical-align: middle;
 	width:15%;
-	margin-right:3%;
+	float: left;
+}
+.facebookPhotoContainer .fauxlink.album .name {
+	width:80%;
+	float: right;
+}
+.facebookPhotoContainer .fauxlink.album .privacy {
+	color:#333;
+	font-size: .8em;
 }
 
 .facebookPhotoContainer .fauxlink.photo {
@@ -974,6 +1093,10 @@ textarea {
 	padding:5%;
 	vertical-align: middle;
 	border:1px solid #ccc;
+}
+.error {
+	color:#ff0000;
+	text-align: center;
 }
 
 /*

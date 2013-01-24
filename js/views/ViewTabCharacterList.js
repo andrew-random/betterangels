@@ -11,6 +11,7 @@ app.ViewTabCharacterList = Backbone.View.extend({
 	initialize: function (options) {
 		this.characterCollection = options.characterCollection;
 		this.characterCollection.on('add', this.render, this);
+		this.characterCollection.on('remove', this.emptyCheck, this);
 		this.views = [];
 	},
 
@@ -20,6 +21,26 @@ app.ViewTabCharacterList = Backbone.View.extend({
 		}
 		this.views = [];
 		this.characterCollection.off('add');
+	},
+
+	emptyCheck: function (model) {
+
+		if (this.characterCollection.length == 0) {
+			this.render();
+		} else {
+
+			var deletedModelMetaTag = model.getMetaTag('group');
+			var count = 0;
+			this.characterCollection.filter(function (characterModel) {
+				if (characterModel.getMetaTag('group') == deletedModelMetaTag) {
+					count++;
+				}
+			});
+
+			if (!count) {
+				this.render();
+			}
+		}
 	},
 
 	render: function() {

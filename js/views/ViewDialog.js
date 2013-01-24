@@ -31,11 +31,11 @@ app.ViewDialog = Backbone.View.extend({
     }
 
     // prevent focus from getting confused
-    setTimeout(function () {
+    /*setTimeout(function () {
       if (document.activeElement) {
         $(document.activeElement).blur();
       }
-    }, 500);
+    }, 500);*/
     
   },
 

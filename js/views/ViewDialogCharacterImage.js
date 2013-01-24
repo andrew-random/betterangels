@@ -26,10 +26,22 @@ app.ViewDialogCharacterImage = app.ViewDialog.extend({
 
 		$('.facebookPhotoContainer', this.el).html('<div class="loading">Loading</div>');
 
-		app.user.getFacebookAlbumDataById(this.selectedAlbum, _.bind(function (albumDetails) {
-			this.albumDetails = albumDetails;
-			this.render();
-		}, this));
+		app.user.getFacebookAlbumDataById(
+			
+			this.selectedAlbum, 
+
+			_.bind(function (albumDetails) {
+				this.albumDetails = albumDetails;
+				this.render();
+			}, this),
+
+			_.bind(function (ajaxResp) {
+				//if (ajaxResp.statusText == 'Bad Request') {
+					$('.loading', this.el).replaceWith('<span class="error">Facebook did not return the requested Album.<br />There may be a permissions issue.</span>');
+					$('.controls .done').removeClass('done').addClass('cancel back').text('Back');
+				//}
+			}, this)
+		);
 
 		event.preventDefault();
 	},
@@ -66,14 +78,17 @@ app.ViewDialogCharacterImage = app.ViewDialog.extend({
 	    } else {
 	    	if (!this.selectedAlbum) {
 
-	    		html += "<div class='info'>Only albums with friends-of-friends permissions are available from FB.</div>";
+	    		html += "<div class='info'>Only albums with expanded permissions are available from FB.</div>";
 				for (var x in this.albumData) {
-					if (this.albumData[x].privacy == 'friends-of-friends') {
-			    		html += '<div class="fauxlink album" data-album-id="' + this.albumData[x].id + '">';
+					//if (this.albumData[x].privacy == 'friends-of-friends') {
+			    		html += '<div class="fauxlink album clear-block" data-album-id="' + this.albumData[x].id + '">';
 			    		html += 	'<img src="' + app.fbGetPhotoUrl(this.albumData[x].cover_photo, 'thumbnail') + '" />';
-			    		html += '	' + this.albumData[x].name;
+			    		html += '		<div class="name">';
+			    		html += '		' + this.albumData[x].name;
+			    		html += '		<div class="privacy">' + this.albumData[x].privacy + '</div>';
+			    		html += '	</div>';
 			    		html += '</div>';
-					}
+					//}
 					
 		    	}
 	    	} else {

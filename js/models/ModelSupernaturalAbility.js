@@ -2,10 +2,10 @@
 app.ModelSupernaturalAbility = Backbone.Model.extend({
 
 	defaults: {
+		'type'			: null, // string 	Identifies a unique power
 		'name'			: null, // string	Name of this ability
 		'good_name'		: null,
 		'evil_name'		: null,
-		'unique_id'		: null, // string 	Identifies a unique power
 		'ability_type'	: null, // string 	'aspect'/'power'
 		'good_tactic'	: null, // string 	Tactic for good characters
 		'evil_tactic'	: null, // string 	Tactic for good characters
@@ -27,7 +27,7 @@ app.ModelSupernaturalAbility = Backbone.Model.extend({
 	},
 
 	getUniqueId: function () {
-		return this.get('unique_id');
+		return this.get('type');
 	},
 
 	getTactic: function (characterType) {
@@ -55,7 +55,7 @@ app.ModelSupernaturalAbility = Backbone.Model.extend({
 	},
 
 	getShortDescription: function () {
-		return (this.get('short_desc')) ? this.get('short_desc') : stringTruncate(this.getDescription(), 60);
+		return (this.get('short_desc')) ? this.get('short_desc') : stringTruncate(this.getDescription(), 80);
 	},
 
 	getAll: function () {

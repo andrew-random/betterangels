@@ -28,10 +28,44 @@ app.ModelCharacter = Backbone.Model.extend({
 		'is_pregen'		: false,				// bool 	is a pregen or not
 	},
 
-	initialize: function () {
+	initialize: function (characterData) {
+		
+		if (characterData) {
+			this.setUniqueId(characterData.unique_id, false);
+			this.setFbUserId(characterData.fb_user_id, false);
+			this.setPlayerName(characterData.player_name, false);
+			this.setCharacterName(characterData.character_name, false);
+			this.setCharacterType(characterData.character_type, false);
+			this.setIsNpc(characterData.is_npc, false);
+			this.setDescription(characterData.description, false);
+			this.setNotes(characterData.notes, false);
+			this.setRiderName(characterData.rider_name, false);
+			this.setRiderStrategy(characterData.rider_strategy, false);
+			this.setPowers(characterData.powers, false);
+			this.setAspects(characterData.aspects, false);
+			this.setStrategies(characterData.strategies, false);
+			this.setSpecialties(characterData.specialties, false);
+			this.setImageUrl(characterData.image_url, false);
+			this.setMetaTags(characterData.meta_tags, false);
+			this.setModified(characterData.modified, false);
+			this.setCreated(characterData.created, false);
+			this.setIsPregen(characterData.is_pregen, false);
+		}
+		
+		this.setHasUnsavedChanges(false);
+
+		// prevent cloning incidents
+		/*this.set('strategies', {});
+		this.set('specialties', {});
+		this.set('powers', {});
+		this.set('aspects', {});
+		this.set('meta_tags', {});*/
 
 		// mark that this model needs to be saved to the DB
-		this.on('change', function () { this.setHasUnsavedChanges( true); }, this);
+		this.on('change', function () { 
+			this.setHasUnsavedChanges( true); 
+			}, this
+		);
 	},
 
 	setHasUnsavedChanges: function(value) {
@@ -42,29 +76,6 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.unsavedChanges;
 	},
 
-	parse: function (characterData) {
-		this.setUniqueId(characterData.unique_id);
-		this.setFbUserId(characterData.fb_user_id);
-		this.setPlayerName(characterData.player_name);
-		this.setCharacterName(characterData.character_name);
-		this.setCharacterType(characterData.character_type);
-		this.setIsNpc(characterData.is_npc);
-		this.setDescription(characterData.description);
-		this.setNotes(characterData.notes);
-		this.setRiderName(characterData.rider_name);
-		this.setRiderStrategy(characterData.rider_strategy);
-		this.setPowers(characterData.powers);
-		this.setAspects(characterData.aspects);
-		this.setStrategies(characterData.strategies);
-		this.setSpecialties(characterData.specialties);
-		this.setImageUrl(characterData.image_url);
-		this.setMetaTags(characterData.meta_tags);
-		this.setModified(characterData.modified);
-		this.setCreated(characterData.created);
-		this.setIsPregen(characterData.is_pregen);
-		this.setHasUnsavedChanges(false);
-	},
-
 	save: function (onSuccessCallback, onErrorCallback) {
 
 		// don't save pregen characters
@@ -72,7 +83,7 @@ app.ModelCharacter = Backbone.Model.extend({
 			return false;
 		}
 
-		if (this.isNew()) {
+		if (this.isNew() && !this.getUniqueId()) {
 
 			// set created date
 			this.setCreated(Math.ceil(new Date().getTime()/1000), {silent:true});
@@ -150,65 +161,62 @@ app.ModelCharacter = Backbone.Model.extend({
 	getUniqueId: function () {
 		return this.get('unique_id');
 	},
-	setUniqueId: function (uniqueId) {
-		return this.set('unique_id', uniqueId);
+	setUniqueId: function (uniqueId, hasChanged) {
+		return this.set('unique_id', uniqueId, (hasChanged ? {silent:true} : null));
 	},
 	
-	getUniqueId: function() {
-		return this.get('unique_id');
-	},
 	
-	setCharacterName: function (value) {
-		this.set('character_name', value);
+	setCharacterName: function (value, hasChanged) {
+		this.set('character_name', value, (hasChanged ? {silent:true} : null));
 	},
 	getCharacterName: function () {
 		return this.get('character_name');
 	},
 	
-	setPlayerName: function (value) {
-		this.set('player_name', value);
+	setPlayerName: function (value, hasChanged) {
+		this.set('player_name', value, (hasChanged ? {silent:true} : null));
 	},
 	getPlayerName: function () {
 		return this.get('player_name');
 	},
 	
-	setRiderName: function (value) {
-		this.set('rider_name', value);
+	setRiderName: function (value, hasChanged) {
+		this.set('rider_name', value, (hasChanged ? {silent:true} : null));
 	},
 	getRiderName: function () {
 		return this.get('rider_name');
 	},
 
-	setRiderStrategy: function (value) {
-		this.set('rider_strategy', value);
+	setRiderStrategy: function (value, hasChanged) {
+		this.set('rider_strategy', value, (hasChanged ? {silent:true} : null));
 	},
 	getRiderStrategy: function () {
 		return this.get('rider_strategy');
 	},
 	
-	setCharacterType: function (value) {
-		this.set('character_type', value);
+	setCharacterType: function (value, hasChanged) {
+		this.set('character_type', value, (hasChanged ? {silent:true} : null));
 	},
 	getCharacterType: function (value) {
 		return this.get('character_type');
 	},
 
-	setIsNpc: function (value) {
-		this.set('is_npc', value);
+	setIsNpc: function (value, hasChanged) {
+		this.set('is_npc', value, (hasChanged ? {silent:true} : null));
 	},
 	getIsNpc: function () {
 		return this.get('is_npc');
 	},
 	
-	setDescription: function (value) {
-		this.set('description', value);
+	setDescription: function (value, hasChanged) {
+		this.set('description', value, (hasChanged ? {silent:true} : null));
 	},
 	getDescription: function (value) {
 		return this.get('description');
 	},
 
-	setNotes: function (value) {
-		this.set('notes', value);
+	setNotes: function (value, hasChanged) {
+		this.set('notes', value, (hasChanged ? {silent:true} : null));
 	},
 	getNotes: function (value) {
 		return this.get('notes');
@@ -264,9 +272,12 @@ app.ModelCharacter = Backbone.Model.extend({
 		return data;
 	},
 
-	setStrategies: function (data) {
-		this.set('strategies', data);
-		this.trigger('change change:strategies', data);
+	setStrategies: function (data, hasChanged) {
+		this.set('strategies', data, (hasChanged ? {silent:true} : null));
+		if (hasChanged) {
+			this.trigger('change change:strategies', data);	
+		}
+		
 	},
 	getStrategies: function () {
 		return this.get('strategies');
@@ -359,6 +370,7 @@ app.ModelCharacter = Backbone.Model.extend({
 		var strategies = this.getStrategies();
 		if (typeof strategies[statName] == 'undefined') {
 			strategies[statName] = 0;
+			this.setStrategies(strategies);
 		}
 		return strategies[statName];
 	},
@@ -503,8 +515,8 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.get('specialties');
 	},
 
-	setImageUrl: function (value) {
-		this.set('image_url', value);
+	setImageUrl: function (value, hasChanged) {
+		this.set('image_url', value, (hasChanged ? {silent:true} : null));
 	},
 	getImageUrl: function () {
 		return this.get('image_url');
@@ -513,16 +525,16 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.get('image_url') !== null && this.get('image_url') != '';
 	},
 
-	setIsPregen: function (value) {
-		this.set('is_pregen', value);
+	setIsPregen: function (value, hasChanged) {
+		this.set('is_pregen', value, (hasChanged ? {silent:true} : null));
 	}, 
 
 	getIsPregen: function () {
 		return this.get('is_pregen');
 	},
 
-	setFbUserId: function (value) {
-		this.set('fb_user_id', value);
+	setFbUserId: function (value, hasChanged) {
+		this.set('fb_user_id', value, (hasChanged ? {silent:true} : null));
 	},
 	getFbUserId: function () {
 		return this.get('fb_user_id');

@@ -61,6 +61,11 @@ app.ModelUser = Backbone.Model.extend({
 				if (successCallback) {
 					successCallback(this.albumDetails[albumId]);
 				}
+			}, this),
+			_.bind(function (ajaxResp) {
+				if (errorCallback) {
+					errorCallback(ajaxResp);
+				}
 			}, this));
 		} else {
 			successCallback(this.albumDetails[albumId]);

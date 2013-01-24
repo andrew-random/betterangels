@@ -39,7 +39,7 @@ app.ViewFacebookLoginButton = Backbone.View.extend({
 
     facebookLogin: function (event) {
 
-      var config = {scope:'email,user_photos'};
+      var config = {scope:'email,user_photos,friend_photos'};
 
       // call login function
       FB.login(function () {}, config);

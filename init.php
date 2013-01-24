@@ -38,11 +38,8 @@
 	$sql = mysql_query("SELECT * FROM `supernatural_abilities`");
 	while ($row = mysql_fetch_assoc($sql)) {
 		
-		// legacy
-		$row['unique_id'] = $row['type'];
-
 		// strip unneeded elements
-		unset($row['ability_id'], $row['type']);
+		unset($row['ability_id']);
 
 		$cacheData['ability'][$row['power_type']][] = $row;
 	}

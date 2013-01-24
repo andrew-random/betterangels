@@ -13,7 +13,7 @@ app.ControllerCharacter = {
 
 		var characterModel 	= registry.getCharacterByUniqueId(uniqueId);
 
-	    if (app.user.isLoaded() && !characterModel) {
+	    if (app.user.isLoaded() && uniqueId != 'new' && !characterModel) {
 
 	      // show loading dialog while we reload data
 	      app.dispatcher.trigger('ui.show_dialog', new app.ViewDialogLoading());
@@ -23,9 +23,8 @@ app.ControllerCharacter = {
 	      // we've initialized, but we can't find character data. We may be looking at another user's character, so we fire a special request.
 	      app.fetchCharacterData(uniqueId, _.bind(function (characterData) {
 	        
-	        var characterModel = new app.ModelCharacter();
-
-	        characterModel.parse(characterData);
+	        var characterModel = new app.ModelCharacter(characterData);
+	        
 	        this.activeView.model = characterModel;
 	        this.activeView.render();
 

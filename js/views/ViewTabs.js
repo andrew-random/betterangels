@@ -18,9 +18,16 @@ app.ViewTabs = Backbone.View.extend({
   swipeDetectionBusy: false,
   swipeBusy: false,
 
+  resizeInterval: false,
+
   initialize: function () {
     // we explictly set this to hack a pass-by-reference issue.
     this.tabs = {};
+
+    // queue resizes
+    this.resizeInterval = setInterval(_.bind(function () {
+      this.resize();
+    }, this), 500);
   },
 
   clickActiveTab: function (event) {
@@ -138,6 +145,9 @@ app.ViewTabs = Backbone.View.extend({
     for (var x in this.tabs) {
       this.tabs[x].view.close();
     }
+    clearInterval(this.resizeInterval);
+
+    this.resizeInterval = null;
   },
 
   setActiveTab: function (tabId) {
@@ -220,8 +230,17 @@ app.ViewTabs = Backbone.View.extend({
     // forcibly scroll back to the top
     tabContentContainer.scrollTop(0);
     
-      
-  
+  },
+
+  resize: function () {
+
+    var tabContentContainer = $('.tabContentContainer .tabContent', this.el);
+    var activeTabDom      = $('.tabContentContainer .tabContent.' + this.getActiveTab(), this.el);    
+    var oldTabHeight      = activeTabDom.height();
+    var currentTabHeight  = activeTabDom.css({'height':'auto'}).height();
+    if (currentTabHeight) {
+      tabContentContainer.css({height:currentTabHeight, 'overflow':'hidden'});
+    }
   },
 
   getNumTabs: function () {

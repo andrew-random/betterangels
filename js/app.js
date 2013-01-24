@@ -184,10 +184,8 @@ var app = {
 	heartBeat: function () {
 
 		if (this.hasFBSession()) {
-
 			// cycle through the registry, saving character models that have unsaved changes
 			registry.getAllCustomCharacters().each(function (characterModel) {
-				
 				if (characterModel.hasUnsavedChanges() && !characterModel.ajaxBusy) {
 
 					characterModel.setAjaxBusy(true);
@@ -195,7 +193,6 @@ var app = {
 					app.dispatcher.trigger('ui.save_start');
 					
 					characterModel.save(function () {
-							
 							characterModel.setAjaxBusy(false);
 							app.dispatcher.trigger('ui.save_success');
 
@@ -249,14 +246,11 @@ var app = {
 				// update custom characters
 				if (resp.characters) {
 					for (var x in resp.characters) {
-
 						var characterData = resp.characters[x];
-						var characterModel = new app.ModelCharacter();
-						characterModel.parse(characterData);
+						var characterModel = new app.ModelCharacter(characterData);
 
 						// push to registry if not already found
 						registry.addCustomCharacter(characterModel);
-
 					}
 					registry.charactersLoaded = true;
 				}

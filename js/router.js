@@ -3,9 +3,8 @@ var AppRouter = Backbone.Router.extend({
   routes: {
     ''                      : 'defaultRoute',
     'home'                  : 'defaultRoute',
-    "character/*uniqueId"   : "character",  // #character
-    'list'                  : 'character',
-    'list/*tab'             : 'character',
+    "character/*uniqueId"   : "characterShow",  // #character
+    'list/*tab'             : 'characterList',
     'page/*child'           : 'dynamicPage',
   },
 
@@ -25,11 +24,11 @@ var AppRouter = Backbone.Router.extend({
     // use existing path if available
     if (document.location.hash) {
       
-      hasValidRoute = this.navigate(document.location.hash, {trigger:true});
+      hasValidRoute = this.navigate(document.location.hash);
 
     } else if (cachedCookiePath) {
 
-      hasValidRoute = this.navigate(cachedCookiePath, {trigger:true});
+      hasValidRoute = this.navigate(cachedCookiePath);
 
     } else {
 
@@ -46,7 +45,7 @@ var AppRouter = Backbone.Router.extend({
     app.dispatcher.trigger('ui.show_page', new app.ViewPageHome());
   },
 
-  character: function(uniqueId) {
+  characterShow: function(uniqueId) {
 
     // strip out tabs from hash
     if (uniqueId && uniqueId.indexOf('/tab/') != -1) {
@@ -55,15 +54,19 @@ var AppRouter = Backbone.Router.extend({
 
     this.setActiveController(app.ControllerCharacter);
     
-    if (uniqueId) {
+    // pass info to controller
+    this.activeController.showCharacter(uniqueId);
+  
+     
+  },
 
-      // pass info to controller
-      this.activeController.showCharacter(uniqueId);
-    } else {
+  characterList: function() {
 
-      // pass info to controller
-      this.activeController.showCharacters();
-    }
+    this.setActiveController(app.ControllerCharacter);    
+  
+    // pass info to controller
+    this.activeController.showCharacters();
+  
      
   },
 

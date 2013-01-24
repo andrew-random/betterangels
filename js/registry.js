@@ -50,8 +50,7 @@ var registry = {
 
 		// pull pregen characters from cache data
 		for (var x in cacheData.characters.pregen) {
-			var characterModel = new app.ModelCharacter();
-			characterModel.parse(cacheData.characters.pregen[x]);
+			var characterModel = new app.ModelCharacter(cacheData.characters.pregen[x]);
 			this.characters.pregen.add(characterModel);
 		}
 	},
@@ -119,11 +118,8 @@ var registry = {
 		// remove old uniqueId
 		delete cloneData['unique_id'];
 
-		// new model
-		var customCharacterModel = new app.ModelCharacter();
-
-		// clone data
-		customCharacterModel.parse(cloneData);
+		// new model with clone data
+		var customCharacterModel = new app.ModelCharacter(cloneData);
 
 		// change owner
 		customCharacterModel.setFbUserId(app.user.getFacebookId());
@@ -163,10 +159,19 @@ var registry = {
 
 	getAllMetaTags: function (tagName) {
 		var data = {};
-		data['allies'] = 'Allies';
-		data['enemies'] = 'Enemies';
+		data['Allies'] 	= 'Allies';
+		data['Enemies'] = 'Enemies';
 
+		// scan custom chars
 		var characterModel = this.characters.custom.each(function (characterModel) {
+			var metaTag = characterModel.getMetaTag('group');
+			if (metaTag) {
+				data[metaTag] = metaTag;	
+			}
+		});
+
+		// scan pregen chars
+		var characterModel = this.characters.pregen.each(function (characterModel) {
 			var metaTag = characterModel.getMetaTag('group');
 			if (metaTag) {
 				data[metaTag] = metaTag;	
