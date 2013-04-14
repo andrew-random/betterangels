@@ -20,18 +20,14 @@ var AppRouter = Backbone.Router.extend({
     var hasValidRoute = false;
     var cachedCookiePath = $.cookie('path');
 
-
     // use existing path if available
     if (document.location.hash) {
-      
-      hasValidRoute = this.navigate(document.location.hash);
+      hasValidRoute = this.navigate(document.location.hash, {trigger:true});
 
     } else if (cachedCookiePath) {
-
       hasValidRoute = this.navigate(cachedCookiePath);
 
     } else {
-
       hasValidRoute = this.navigate('home', {trigger:true});
 
     }
@@ -71,7 +67,7 @@ var AppRouter = Backbone.Router.extend({
   },
 
   dynamicPage: function (pageAlias) {
-
+  
     // strip out tabs from hash
     if (pageAlias) {
       pageAlias = pageAlias.substring(pageAlias.indexOf('/') + 1, 99);

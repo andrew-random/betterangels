@@ -29,7 +29,7 @@ app.ViewTabMore = Backbone.View.extend({
 	},
 
 	changeGroup: function (event) {
-		console.log('change', this.model.toJSON());
+
 		var selectedGroup = $(event.currentTarget).val();
 
 		if (!selectedGroup) {

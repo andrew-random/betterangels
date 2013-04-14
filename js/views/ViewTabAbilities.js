@@ -122,7 +122,6 @@ app.ViewTabAbilities = Backbone.View.extend({
     clearTimeout(event.target.timeout);
 
     event.target.timeout = setTimeout(_.bind(function () {
-      console.log(slot, newSpecialty);
       this.model.addSpecialty(slot, newSpecialty);
       target.prev('label').text(newSpecialty);
     }, this), 1000);
