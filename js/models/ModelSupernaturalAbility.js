@@ -58,6 +58,34 @@ app.ModelSupernaturalAbility = Backbone.Model.extend({
 		return (this.get('short_desc')) ? this.get('short_desc') : stringTruncate(this.getDescription(), 80);
 	},
 
+	getNumDice: function (characterModel) {
+		var tactic = this.getTactic(characterModel.getCharacterType());
+
+		var strategies 	= characterModel.getStrategiesFormatted();
+		var parent 		= 'NOT FOUND';
+		for (var x in strategies) {
+
+			if (tactic == strategies[x].evil) {
+				parent = strategies[x].evil;
+			} else if (tactic == strategies[x].good) {
+				parent = strategies[x].good;
+			}
+
+			// children
+			for (var y in strategies[x].children) {
+
+				if (tactic == strategies[x].children[y].evil) {
+					parent = strategies[x].evil;
+				} else if (tactic == strategies[x].children[y].good) {
+					parent = strategies[x].good;
+				}
+			}
+
+		}
+
+		return characterModel.getStatValue(parent) + characterModel.getStatValue(tactic);
+	},
+
 	getAll: function () {
 
 	}

@@ -295,6 +295,8 @@ h1.betterAngelsTitle b {
 	border:1px solid #999;
 	border-bottom:1px solid #999;
 	text-decoration: none;
+
+	text-shadow:1px 1px 1px #333;
 }
 .tabRow .tabHeader.active {
 	background: #fff;
@@ -303,6 +305,8 @@ h1.betterAngelsTitle b {
 	border-left:1px solid #000;
 	border-right:1px solid #000;
 	border-bottom:1px solid #fff;
+
+	text-shadow:1px 1px 1px #ccc;
 }
 .tabRow.two .tabHeader {
 	width:49%;
@@ -635,18 +639,19 @@ textarea {
 	
 	height:24px;
 	width:24px;
-	line-height: 24px;
+	line-height: 22px;
 	text-align: center;
 
 	margin:0 5px;
-	border: 1px solid #333;
-	border-top:1px solid #eee;
-	border-left:1px solid #eee;
+	border: 1px solid #ccc;
 	background: #eee;
 	color:#000;
 	text-decoration: none;
 	font-weight: 100;
 	font-size:.9em;
+
+	box-shadow:1px 1px 4px #fff inset, 1px 1px 3px #ccc;
+	border-radius: 5px;
 
 }
 .tacticSide.evil .fauxlink:active {

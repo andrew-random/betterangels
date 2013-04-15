@@ -201,7 +201,7 @@ app.ViewTabAbilities = Backbone.View.extend({
       html += '<div class="fauxlink ability" data-ability-slot="' + abilitySlot +'" data-ability-type="' + (isPower ? 'power' : 'aspect') + '" ' + (abilityModel ? 'data-unique-id="' + abilityModel.getUniqueId() + '"' : '') + '>';
       if (abilityModel) {
 
-          html += '<div class="name">' + abilityModel.getName(this.model.getCharacterType()) + ' (' + abilityModel.getTactic(this.model.getCharacterType()) + ')</div>';
+          html += '<div class="name">' + abilityModel.getName(this.model.getCharacterType()) + ' (' + abilityModel.getTactic(this.model.getCharacterType()) + ') ' + abilityModel.getNumDice(this.model) + 'd </div>';
           html += '<div class="shortDesc">' + abilityModel.getShortDescription() + '</div>';
 
       } else {

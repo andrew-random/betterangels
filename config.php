@@ -7,9 +7,9 @@ if (strpos($_SERVER['HTTP_HOST'], 'andrew') !== false) {
 	define('DB_NAME', 'betterangels');
 } else {
 	define('DB_HOST', 'localhost');
-	define('DB_USER', 'sheridan_ba');
+	define('DB_USER', 'cardbob1_ba');
 	define('DB_PASS', 'betterangels');
-	define('DB_NAME', 'sheridan_ba');
+	define('DB_NAME', 'cardbob1_ba');
 }
 
 define('FB_APP_ID','266561183460054');
