@@ -78,7 +78,6 @@
 		appendToPageTree($row['page_id'], $row['parent'], $cacheData['pages']['tree']);
 	}
 
-
 	// string to write to the file
 	$fileContent = 'var cacheData = ' . json_encode($cacheData, JSON_NUMERIC_CHECK) . ';';
 

@@ -1,51 +1,54 @@
 app.ViewPageHome = app.ViewPage.extend({
 
-    loginButtonView: null,
+		loginButtonView: null,
 
-    events: {
-      'click .menuItem'       : 'changePage',
-    },
+		events: {
+			'click .menuItem'       : 'changePage',
+		},
 
-    initialize: function () {
-      this.delegateEvents();
-    },
+		initialize: function () {
+			this.delegateEvents();
+		},
 
-    className: 'page home',
+		className: 'page home',
 
-    changePage: function (event) {
+		changePage: function (event) {
 
-      var target = $(event.currentTarget);
-      app.router.navigate(target.data('viewPage'), {trigger:true});
+			var target = $(event.currentTarget);
+			app.router.navigate(target.data('viewPage'), {trigger:true});
 
-      event.preventDefault();
-    },
+			event.preventDefault();
+		},
 
-    onClose: function () {
-      if (this.loginButtonView) {
-        this.loginButtonView.close();
-      }
-    }, 
+		onClose: function () {
+			if (this.loginButtonView) {
+				this.loginButtonView.close();
+			}
+		}, 
 
-    render: function () {
+		render: function () {
 
-      var container = $(this.el);
+			var container = $(this.el);
 
-      var html = '';
-      html += '<h1 class="betterAngelsTitle"></h1>';
+			var html = '';
+			html += ' <div class="wrapper">';
 
-      html += '<div class="menu">';
-      html += '<div class="fauxlink menuItem" data-view-page="character/new"><span>Create</span></div>';
-      html += '<div class="fauxlink menuItem" data-view-page="list/"><span>List</span></div>';
-      html += '<br />';
-      html += '<div class="fauxlink menuItem" data-view-page="page/cheat"><span>Cheat Sheet</span></div>';
-      html += '<div class="fauxlink menuItem" data-view-page="page/more"><span>More</span></div>';
-      html += '</div>';
+			html +=   '<h1 class="betterAngelsTitle"></h1>';
 
-      container.append(html);
+			html +=	  '<div class="userAccount"></div>';
 
-      this.loginButtonView = new app.ViewFacebookLoginButton();
-      container.append(this.loginButtonView.render().el);
+			html +=   '<div class="menu">';
+			html +=     '<div class="fauxlink menuItem" data-view-page="character/new"><span>Create Character</span></div>';
+			html +=     '<div class="fauxlink menuItem" data-view-page="list/"><span>Show Characters</span></div>';
+			html +=     '<div class="fauxlink menuItem" data-view-page="page/cheat"><span>Cheat Sheet</span></div>';
+			html += 	'</div>';
+			html += '</div>';      
 
-      return this;
-    }
+			container.append(html);
+
+			this.loginButtonView = new app.ViewFacebookLoginButton();
+			$('.userAccount', container).append(this.loginButtonView.render().el);
+
+			return this;
+		}
 });

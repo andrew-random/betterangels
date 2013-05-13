@@ -19,7 +19,6 @@ app.ViewDialogPHPMessage = app.ViewDialog.extend({
 	render: function () {
 
 		var html = '';
-		html += '<h1>' + this.title + '</h1>';
 		html += '<div class="body">' + this.body + '</div>';
 
 		html += '<div class="controls one_button">';

@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'KomikaTitlePaintRegular';
+    src: url('komtitp_.eot');
+    src: url('komtitp_.eot') format('embedded-opentype'),
+         url('komtitp_.woff') format('woff'),
+         url('komtitp_.ttf') format('truetype'),
+         url('komtitp_.svg#KomikaTitlePaintRegular') format('svg');
+}

@@ -60,13 +60,11 @@ app.ViewCharacterListEntry = Backbone.View.extend({
 		
 		var imageStyle = '';
 		if (this.model.hasImageUrl()) {
-            imageStyle = 'style="background-image:url(' + this.model.getImageUrl() + ');"';
+            imageStyle = 'style="background-image:url(' + this.model.getImageUrlFormatted() + ');"';
         }
     	html += '	<div class="image" ' + imageStyle + '></div>';
-		html += '	<div class="rider">' + (this.model.getRiderName() ? this.model.getRiderName() : 'Rider Name') + '</div>';
+		html += '	<div class="rider">' + (this.model.getStageName() ? this.model.getStageName() : 'Stage Name') + '</div>';
 		html += '	<div class="character">' + (this.model.getCharacterName() ? this.model.getCharacterName() : 'Character Name')+ '</div>';
-
-		html += '	<div class="cost">Cost: ' + this.model.getTotalCost() + '</div>';
 		html += '</div>';
 
 		

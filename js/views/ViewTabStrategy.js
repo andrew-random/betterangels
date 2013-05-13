@@ -30,7 +30,16 @@ app.ViewTabStrategy = Backbone.View.extend({
 			}
 			count++;
 			wrapper.append(statBlock);
-			
+
+			// first child strategy
+			var tactic = stats[x].children[0];
+
+			var view = new app.ViewTactic({model:this.model});
+			view.setStatGood(tactic.good);
+			view.setStatEvil(tactic.evil);
+			statBlock.append(view.render().el);
+			this.views.push(view);
+
 			// parent strategy
 			var view = new app.ViewTactic({model:this.model});
 			view.setIsStrategy(true);
@@ -42,6 +51,14 @@ app.ViewTabStrategy = Backbone.View.extend({
 			statBlock.append(view.render().el);
 			this.views.push(view);
 
+			var tactic = stats[x].children[1];
+
+			var view = new app.ViewTactic({model:this.model});
+			view.setStatGood(tactic.good);
+			view.setStatEvil(tactic.evil);
+			statBlock.append(view.render().el);
+			this.views.push(view);
+/*
 			// child tactics
 			for (var y in stats[x].children) {
 
@@ -52,7 +69,7 @@ app.ViewTabStrategy = Backbone.View.extend({
 				view.setStatEvil(tactic.evil);
 				statBlock.append(view.render().el);
 				this.views.push(view);
-			}
+			}*/
 		}
 	    return this;    
 	},

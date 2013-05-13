@@ -68,8 +68,6 @@ app.ViewDialogCharacterImage = app.ViewDialog.extend({
 	    var container 		= $(this.el);
 	  
 	    var html = '';
-
-	    html += '	<h1>' + this.title + '</h1>';
 	    
 	    html += '<div class="facebookPhotoContainer">';
 

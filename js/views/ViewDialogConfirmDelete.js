@@ -7,6 +7,8 @@ app.ViewDialogConfirmDelete = app.ViewDialog.extend({
 		'click .delete' 					: 'delete',
 	},
 
+	title: 'Destroy utterly?',
+
 
 	delete: function (event) {
 
@@ -25,7 +27,6 @@ app.ViewDialogConfirmDelete = app.ViewDialog.extend({
 	  
 	    var html = '';
 
-	    html += '<h1>Destroy utterly?</h1>';
 	    html += '<p>Are you sure you want to delete <b>' + (this.model.getRiderName() ? this.model.getRiderName() : 'Rider Name') + '/' + (this.model.getCharacterName() ? this.model.getCharacterName() : 'Character Name') + '</b>?<br /><br />This cannot be undone.</p>';
 
 	    html += '<div class="controls two_buttons">';

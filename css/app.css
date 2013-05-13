@@ -9,13 +9,13 @@ html, body {
 }
 body {
 	background:#ccc;
-	font-family:verdana;
 	font-size: 100%;
 	padding:0;
 	margin:0;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-touch-callout: none;
 	user-select: none;
+	font-family: Verdana;
 }
 html, body, div, span, object, form, input, h1, h2, button, label, a, img {
 	user-select: none;
@@ -28,19 +28,26 @@ h1, h2, h3, h4, h5, h6  {
 	margin:0;
 	padding:0;
 	font-weight: 100;
-	font-size: 100%;
+	font-size: 1rem;
 }
 a,
 a:hover {
 	text-decoration: none;
 }
+@font-face {
+    font-family: 'AnimeAce2';
+    src: url('../fonts/animeace2_bld.eot');
+    src: url('../fonts/animeace2_bld.eot') format('embedded-opentype'),
+         url('../fonts/animeace2_bld.woff') format('woff'),
+         url('../fonts/animeace2_bld.ttf') format('truetype'),
+         url('../fonts/animeace2_bld.svg#AnimeAce2') format('svg');
+}
 
 #appRoot {
-	position: relative;
+	position: relative;	
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	background:#fff;
 }
 @media only screen and (min-width: 1000px) {
   /* rules that only apply for canvases larger than 1200px */
@@ -55,7 +62,7 @@ a:hover {
 **********************/
 #appHeader {
 	height:6%;
-	background: #8e1000;
+	background: #842216;
 	overflow: hidden;
 }
 #appContent {
@@ -77,9 +84,10 @@ a:hover {
 * Header Elements Blocks
 **********************/
 #appHeader #appTitle {
-	width:35%;
-	height:100%;
-	float:left;
+	position: absolute;
+	left:0;
+	top:0;
+	width:50%;	
 }
 #appHeader #appStatus {
 	float:right;
@@ -96,7 +104,8 @@ a:hover {
 * Header Elements Details
 **********************/
 #appHeader #appTitle {
-	font-size:.8em;
+	font-size:.8rem;
+	font-variant: small-caps;
 	padding-top:2%;
 	text-indent: 2%;
 	color:#fff;
@@ -123,64 +132,93 @@ a:hover {
 	margin-right:2%;
 }
 #appHeader #appStatus .icon.facebook {
-	background-image: url('../img/facebook.gif');
+	background-image: url('../img/ui/facebook.gif');
 }
 #appHeader #appStatus .icon.user {
-	background-image: url('../img/user.png');
+	background-image: url('../img/ui/user.png');
 }
 #appHeader #appStatus .icon.anonymous {
-	background-image: url('../img/user_unknown.png');
+	background-image: url('../img/ui/user_unknown.png');
 }
 #appHeader #appStatus .icon.server {
-	background-image: url('../img/server.png');
+	background-image: url('../img/ui/server.png');
 }
 #appHeader #appStatus .icon.disk {
-	background-image: url('../img/disk.png');	
+	background-image: url('../img/ui/disk.png');	
 }
 #appHeader #appStatus .icon.success {
-	background-image: url('../img/success.png');
+	background-image: url('../img/ui/success.png');
 }
 #appHeader #appStatus .icon.error {
-	background-image: url('../img/error.png');	
+	background-image: url('../img/ui/error.png');	
 }
 #appHeader #appStatus .icon.busy {
-	background-image: url('../img/ajax-loader.gif');	
+	background-image: url('../img/ui/ajax-loader.gif');	
 }
 
 
 #appBackButton:hover {
 	text-decoration: none;	
 }
-#appDialog {
+
+/**********************
+* Dialog Box
+**********************/
+#appOverlay {
 	position: absolute;
 	left:0;
 	top:0;
 	width:100%;
 	height:100%;
 	display:none;
-	background-image: url('../img/overlay.png');
+	background-image: url('../img/ui/overlay.png');
+	display: none;
 }
-#appDialog.active {
-	display:block;
+#appOverlay.active {
+	display: block;
 }
-#appDialogContent {
+#appDialog {
 	border: 2px solid #000;
 	background: #fff;
-	padding:2% 5% 2% 5%;
 	position: absolute;
 	left:2%;
 	top:2%;
 	right:2%;
 	bottom:2%;
-
+	display: none;
+	box-shadow: 1px 1px 7px 2px #999;
 }
-#appDialogContent.narrow {
+#appDialog.active {
+	display:block;
+}
+#appDialogHeader {
+	background: #842216;	
+	font-family: AnimeAce2;
+	color:#fff;
+	font-size: .7rem;
+	height: 5%;
+	padding-left:5%;
+	display:table;
+	width:100%;
+}
+#appDialogHeader span {
+	display: table-cell;
+	vertical-align: middle;
+}
+#appDialogContent {
+	padding:2% 5% 2% 5%;
+}
+#appDialog.narrow {
 	top:25%;
 	bottom:25%;
 }
-#appDialogContent.narrow .controls {
+#appDialog.narrow .controls {
 	bottom:5%;
 }
+#appDialog.narrow #appDialogHeader {
+	height:10%;
+}
+
 .fauxlink {
 	cursor:pointer;
 }
@@ -188,11 +226,10 @@ a:hover {
 h1.betterAngelsTitle {
 	font-weight:bold;
 	font-variant: small-caps;
-	font-family: 'Verdana';
 	text-align: center;
-	background: url('../img/logo.jpg') 50% 50% no-repeat;
+	background: url('../img/ui/logo.jpg') 50% 50% no-repeat;
 	background-size: contain;
-	height:30%;
+	height:40%;
 }
 h1.betterAngelsTitle b {
 	margin-left:40px;
@@ -201,36 +238,56 @@ h1.betterAngelsTitle b {
 
 .page {
 	height:100%;
+	background-color: #fff;
 }
-.page.home .menu {
+.page.dynamic {
+	background:#fff url('../img/ui/fire-border.jpg') 0 100% no-repeat;
+	background-size: contain;
+}
+.page .menu {
 	text-align: center;
-	margin-bottom:30px;
+	padding:10px 0;
+	border-radius:10px;	
+	background: #ccc;
 }
-.page.home .menu .menuItem {
-	position: relative;
-	display: inline-block;
-	width:80px;
-	height:80px;
-	margin: 15px;
-	border: 3px solid #000;
+.page .menu .menuItem {
+	background:#8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
 	text-align: center;
 	text-decoration: none;
-	background: #eee
-	font-size:12em;
+	line-height: 3rem;
+	display: table;
+	width: 94%;
+	margin-left:3%;
+	margin-bottom:5px;
+	color:#fff;
+	font-family:AnimeAce2;
+	font-size: .8rem;
 }
-.page.home .menu .menuItem span {
-	position: absolute;
-	left:-10px;
-	top:80px;
-	text-align: center;
-	width:100px;
+.page .menu .menuItem:first-child {
+	border-radius: 10px 10px 0 0 ;
 }
-.page.dynamic .wrapper {
+.page .menu .menuItem:last-child {
+	border-radius: 0 0 10px 10px;
+	margin-bottom: 0;
+}
+.page.dynamic .menu .menuItem {
+	font-size: .7rem;
+}
+.page .menu .menuItem span {
+	display: table-cell;
+	vertical-align: middle;
+	margin-left: 20%;
+}
+.page .wrapper {
 	padding:2% 5%;
 	height:96%;
 }
+.page.ViewCharacterEditor .wrapper {
+	padding:0;
+}
 .page.dynamic h1 {
-	font-size: 1.3em;
+	font-size: 1.3rem;
 	margin:0 0 .5em 0;
 	padding:0;
 	font-weight: bold;
@@ -272,12 +329,10 @@ h1.betterAngelsTitle b {
 .tabRow {
 	display:block;
 	list-style: none;
-	height:32px;
 	margin:0;
 	padding:0;
 	background: #333;
 	overflow: hidden;
-	width:105%;
 }
 .tabRow .tabHeader {
 	margin:0;
@@ -291,40 +346,32 @@ h1.betterAngelsTitle b {
 	text-align: center;
 	line-height: 30px;
 
-	background: #999;
-	border:1px solid #999;
-	border-bottom:1px solid #999;
+	border-bottom:3px solid #b02817;
 	text-decoration: none;
-
-	text-shadow:1px 1px 1px #333;
+	font-family:AnimeAce2;
 }
 .tabRow .tabHeader.active {
-	background: #fff;
-	color:#000;
-	border-top:1px solid #fff;
-	border-left:1px solid #000;
-	border-right:1px solid #000;
-	border-bottom:1px solid #fff;
-
-	text-shadow:1px 1px 1px #ccc;
+	background: #8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
 }
 .tabRow.two .tabHeader {
-	width:49%;
+	width:50%;
+	font-size: .7rem;	
 }
 .tabRow.three .tabHeader {
-	width:32%;
+	width:33%;
+	font-size: .7rem;
 }
-.tabRow .tabHeader:first-child {
-	border-left:none;
-}
-.tabRow .tabHeader:last-child {
-	border-right:none;
+.tabRow.three .tabHeader:nth-child(2) {
+	width:34%;
 }
 
 .tabContent {
-	float:left;
+	display: none;
+	width:100%;
 }
 .tabContent.active {
+	display: block;
 }
 
 p {
@@ -334,6 +381,12 @@ p {
 
 textarea {
 	width:100%;
+}
+
+.userAccount {
+	margin-top:50px;
+	height:30px;
+	font-size: .9rem;
 }
 
 .facebookStatus {
@@ -364,12 +417,14 @@ textarea {
 	background: #fff;
 }
 .characterHeader h1 {
-	font-size:1.2em;
+	font-size:1.2rem;
 	font-variant: small-caps;
 	font-weight: bold;
+	font-family: AnimeAce2;
+	line-height: 1.5rem;
 }
 .characterHeader h2 {
-	float:left;
+	font-size: .8rem;
 }
 .characterHeader h3 {
 	float:right;
@@ -442,17 +497,17 @@ textarea {
 	margin:0 auto;
 }
 
-.ViewCharacterEditor .tabContent h1,
-#appDialog h1 {
-	font-size: 1.3em;
+.ViewCharacterEditor .tabContent h1 {
+	font-size: 1.3rem;
 	margin:0;
 	padding:0;
 	font-weight: bold;
 	font-variant: small-caps;
 }
+
 .ViewCharacterEditor .tabContent h2,
 #appDialog h2 {
-	font-size:1.2em;
+	font-size:1.2rem;
 	font-style: italic;
 	font-weight: 100;
 	margin:0;
@@ -472,9 +527,9 @@ textarea {
 	color:#000;
 	border-radius: 10px 10px 0 0;
 	margin-right:10px;
-	background: #fff url('../img/pencil.png') 5px 50% no-repeat;
+	background: #fff url('../img/ui/pencil.png') 5px 50% no-repeat;
 	padding:0 15px 0 25px;
-	font-size:.8em;
+	font-size:.8rem;
 	font-weight: 100;
 	border:1px solid #ccc;
 	border-bottom: none;
@@ -487,7 +542,7 @@ textarea {
 }
 
 .abilityDescription {
-	font-size: .8em;
+	font-size: .8rem;
 	padding: 0 10px 0 10px;
 	font-style: italic;
 }
@@ -496,26 +551,33 @@ textarea {
 	display:block;
 	text-decoration: none;
 	color:#000;
-	font-size: .8em;
+	font-size: .8rem;
 	border: 1px solid #fff;
 	height:60px;
 	overflow: hidden;
 }
-.abilityBox .ability {
+.abilityBox.edit,
+.abilityBox.delete {
+	border: 1px dotted #ff0000;
+}
+.abilityBox.new {
+	display: none;
+}
+.abilityBox.new.edit {
+	display: block;
 }
 .abilityBox .fauxlink.action {
 	height:100%;
 	float:right;
 	width:50px;
 	text-align: center;
-	background:#eee url('../img/pencil.png') 50% 50% no-repeat;
-	display: none;
+	background:#eee url('../img/ui/pencil.png') 50% 50% no-repeat;
 }
 .abilityBox .fauxlink.action.delete {
-	background:#eee url('../img/delete.png') 50% 50% no-repeat;
+	background:#eee url('../img/ui/delete.png') 50% 50% no-repeat;
 }
 .abilityBox .fauxlink.action.add {
-	background:#eee url('../img/add.png') 50% 50% no-repeat;
+	background:#eee url('../img/ui/add.png') 50% 50% no-repeat;
 }
 .abilityBox.new {
 	display: none;
@@ -523,19 +585,6 @@ textarea {
 /**
  * Edit Mode
  */
-.editMode .abilityBox {
-	border: 1px dotted #ff0000;
-}
-.editMode .abilityBox.new  {
-	display: block;
-}
-.editMode .abilityBox .ability {
-	margin-right:50px;
-}
-.editMode .abilityBox .fauxlink.action {
-	display: block;
-}
-
 .abilityBox .name {
 	font-weight:bold;
 	padding-left:10px;
@@ -559,10 +608,14 @@ textarea {
 	line-height:30px;
 	text-align: center;
 	background: #eee;
-	padding:0 30px;
+	padding:0;
+	width:45%;
 }
 .abilityBox .deleteBox .fauxlink.deleteConfirm {
 	float:right;
+	background:#8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
+	color:#fff;
 }
 .abilityBox .deleteBox .fauxlink.deleteCancel {
 	float:left;
@@ -588,9 +641,23 @@ textarea {
 	margin:0 10px 10px 10px;
 }
 .tacticContainer .statGoodLabel {
-	float:right;
+	text-align: right;
 }
 .tacticContainer .statEvilLabel {
+}
+.tacticContainer .statLabel {
+	line-height: 1rem;
+}
+.tacticContainer .statLabel .dice {
+	display: inline-block;
+	padding: 0 5px;
+}
+.tacticContainer .statLabel .description {
+	color:#999;
+	font-size: .6rem;
+	display: inline-block;
+	padding:0 5px;
+	line-height: 1rem;
 }
 .tacticContainer.strategy {
 	font-weight:bold;
@@ -604,10 +671,10 @@ textarea {
 	margin:0 10px;
 }*/
 .tacticSide.good {
-	padding-right:27px;
+	padding-left:27px;
 }
 .tacticSide.evil {
-	padding-left:27px;
+	padding-right:27px;
 }
 .tacticSide.evil .decrement {
 	margin-left: 0;
@@ -618,20 +685,20 @@ textarea {
 .tacticSide .statBar .dotEmpty,
 .tacticSide .statBar .dotGood,
 .tacticSide .statBar .dotEvil {
-	float:left;
+	float:right;
 	width:26px;
 	height:26px;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 .tacticSide .statBar .dotEmpty {
-	background-image: url('../img/dotEmpty.png');
+	background-image: url('../img/ui/dotEmpty.png');
 }
 .tacticSide .statBar .dotGood {
-	background-image: url('../img/dotEvil.png');
+	background-image: url('../img/ui/dotEvil.png');
 }
 .tacticSide .statBar .dotEvil {
-	background-image: url('../img/dotGood.png');
+	background-image: url('../img/ui/dotGood.png');
 }
 
 .tacticSide .fauxlink {
@@ -648,7 +715,7 @@ textarea {
 	color:#000;
 	text-decoration: none;
 	font-weight: 100;
-	font-size:.9em;
+	font-size:.9rem;
 
 	box-shadow:1px 1px 4px #fff inset, 1px 1px 3px #ccc;
 	border-radius: 5px;
@@ -685,12 +752,12 @@ textarea {
 .tacticSide.evil span,
 .tacticSide.evil .fauxlink,
 .tacticSide.evil .statBar {
-	float:left;
+	float:right;
 }
 .tacticSide.good span,
 .tacticSide.good .fauxlink,
 .tacticSide.good .statBar {
-	float:right;
+	float:left;
 }
 
 #appDialog p {
@@ -707,7 +774,7 @@ textarea {
 	-webkit-overflow-scrolling : touch;
 	user-select: none;
 	-webkit-transform: translate3d(0, 0, 0);
-	font-size:.7em;
+	font-size:.7rem;
 }
 #appDialog .abilityList .abilityGroup {
 	margin-bottom:10px;
@@ -722,11 +789,12 @@ textarea {
 	color:#000;
 	padding:0 0 0 5px;
 	border: 1px solid #000;
-	border-bottom:3px solid #666;	
+	border-bottom:3px solid #666;
 }
 #appDialog .abilityList .abilityGroup.active .groupLabel {
-	font-weight: bold;
-	background: #ccc;	
+	background:#8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
+	color: #fff;
 }
 #appDialog .abilityList .fauxlink.ability {
 	display: none;
@@ -736,7 +804,8 @@ textarea {
 	border-left: 1px solid #000;
 	border-right: 1px solid #000;
 	border-bottom:1px solid #ccc;
-	font-size:.8em;
+	font-size:.6rem;
+	background: #eee;
 }
 #appDialog .abilityList .fauxlink.ability.last {
 	border-radius:0 0 10px 10px;
@@ -746,8 +815,7 @@ textarea {
 	display:block;
 }
 #appDialog .abilityList .fauxlink.selected {
-	background: blue;
-	color:#fff;
+	background: #fff;
 }
 #appDialog .abilityDetails {
 	position: absolute;
@@ -759,10 +827,10 @@ textarea {
 	-webkit-overflow-scrolling : touch;
 	user-select: none;
 	-webkit-transform: translate3d(0, 0, 0);
-	font-size:.7em;	
+	font-size:.7rem;	
 }
 #appDialog .abilityDetails .abilityTitle {
-	font-size:1em;
+	font-size:1rem;
 	font-weight: bold;
 }
 #appDialog .abilityDetails .abilitySubTitle {
@@ -788,18 +856,22 @@ textarea {
 }
 #appDialog .controls div {
 	display: block;
-	border:1px solid #000;
 	text-align: center;
 	float:left;
 	text-decoration:none;
-	background: #8e1000;
+
 	color:#fff;
 	font-variant: small-caps;
 	line-height:2em;
+
+	background:#8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
 }
 #appDialog .controls div.cancel {
 	background: #eee;
 	color:#000;
+	box-shadow: none;
+	box-shadow: 0px 0px 2px 3px #ccc inset;
 }
 #appDialog .controls.two_buttons div {
 	width:47%;
@@ -818,14 +890,14 @@ textarea {
 
 #appDialog .formElement input[type="text"] {
 	width:260px;
-	font-size:.9em;
+	font-size:.9rem;
 }
 #appDialog .formElement select {
 	width:260px;
-	font-size:.9em;
+	font-size:.9rem;
 }
 #appDialog .formElementLabel {
-	font-size:.9em;
+	font-size:.9rem;
 }
 #appDialog .formElement select optgroup option{
 	padding-left:30px;
@@ -886,12 +958,14 @@ textarea {
 	height:70px;
 }
 .characterRow .rider {
+	font-family: AnimeAce2;
+	font-size: .8rem;
 }
 .characterRow .character {
-	font-size:.8em;
+	font-size:.8rem;
 }
 .characterRow .cost {
-	font-size:.8em;
+	font-size:.8rem;
 }
 .characterRow.demon {
 	background: #000;
@@ -936,7 +1010,7 @@ textarea {
 	height:100%;
 	color:red !important;
 	display:block;
-	background:#eee url('../img/delete.png') 50% 50% no-repeat;
+	background:#eee url('../img/ui/delete.png') 50% 50% no-repeat;
 }
 .characterRow .delete:hover,
 .characterRow .delete:active {
@@ -944,7 +1018,7 @@ textarea {
 }
 
 .characterRow .loading {
-	background: #eee url('../img/ajax-loader.gif') 50% 50% no-repeat;
+	background: #eee url('../img/ui/ajax-loader.gif') 50% 50% no-repeat;
 	display: none;
 }
 .characterRow.loading .delete {
@@ -955,7 +1029,7 @@ textarea {
 }
 
 .ViewTabMore .statBlock .content {
-	font-size: .8em;
+	font-size: .8rem;
 	padding-left:10px;
 	padding-right:10px;
 	padding-top:5px;
@@ -1006,7 +1080,7 @@ textarea {
 
 #appDialog .loading {
 	text-align: center;
-	background-image: url('../img/spinner.gif');
+	background-image: url('../img/ui/spinner.gif');
 	background-position: 50% 0;
 	padding-top:120px;
 	background-repeat: no-repeat;
@@ -1069,7 +1143,7 @@ textarea {
 	-webkit-transform: translate3d(0, 0, 0);
 }
 .facebookPhotoContainer .info {
-	font-size: .7em;
+	font-size: .7rem;
 }
 .facebookPhotoContainer .fauxlink.album {
 	margin-bottom:2%;
@@ -1087,7 +1161,7 @@ textarea {
 }
 .facebookPhotoContainer .fauxlink.album .privacy {
 	color:#333;
-	font-size: .8em;
+	font-size: .8rem;
 }
 
 .facebookPhotoContainer .fauxlink.photo {

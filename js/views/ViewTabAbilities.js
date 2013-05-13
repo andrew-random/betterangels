@@ -1,49 +1,27 @@
 app.ViewTabAbilities = Backbone.View.extend({
 
   events: {
-    'click .fauxlink.add'             : 'abilityUIOpen',
-    'click .fauxlink.ability'         : 'abilityUIOpen',
-    'click .fauxlink.delete'          : 'abilityDelete',
-    'click .fauxlink.deleteConfirm'   : 'abilityDeleteConfirm',
-    'click .fauxlink.deleteCancel'    : 'abilityDeleteCancel',
+   // 'click .fauxlink.delete'          : 'abilityDelete',
+   // 'click .fauxlink.deleteConfirm'   : 'abilityDeleteConfirm',
+    //'click .fauxlink.deleteCancel'    : 'abilityDeleteCancel',
     'click .fauxlink.statBlockEdit'   : 'abilityEdit',
     'keyup input.specialtySlot'       : 'specialtyAdd',
   },
 
+  views: {'power':[], 'aspect':[]},
   className: 'ViewTabAbilities',
 
-  initialize: function () {
-    this.model.on('change:aspects change:powers change:specialties', this.render, this);
+  close: function () {
+    for (var x in this.views) {
+      for (var y in this.views[x]) {
+        this.views[x][y].close();
+      }
+      
+    }
   },
 
-  abilityUIOpen: function (event) {
-    
-    var data = $(event.currentTarget).data();
-
-    if (data.specialties) {
-       
-       var view = new app.ViewDialogSpecialties({model:this.model});
-
-    } else {
-
-      if (!$(event.target).parents('.statBlock').hasClass('editMode')) {
-        return false;
-      }
-
-      var view = new app.ViewDialogAbilitySelector({model:this.model});
-      view.setAbilityType(data['abilityType']);
-      view.setSlot(data['abilitySlot']);
-
-      if (data['uniqueId']) {
-        view.setOldAbilityUniqueId(data['uniqueId']);
-        view.setSelectedAbility(data['uniqueId']);
-      }
-
-    }
-
-    app.dispatcher.trigger('ui.show_dialog', view);
-    event.preventDefault();
-
+  initialize: function () {
+    this.model.on('change:aspects change:character_type change:powers change:specialties', this.render, this);
   },
 
   abilityEdit: function (event) {
@@ -51,64 +29,21 @@ app.ViewTabAbilities = Backbone.View.extend({
     if (!this.model.isOwner()) {
       app.dispatcher.trigger('ui.show_dialog', new app.ViewDialogImportPregen({model:this.model}));
     } else {
-      $(event.target).parents('.statBlock').toggleClass('editMode');  
+      if ($(event.target).data('abilityType') != 'specialties') {
+        var views = this.views[$(event.target).data('abilityType')];
+
+        for (var x in views) {
+          if (views[x].getMode() == app.ViewSupernaturalAbility.ModeView) {
+            views[x].setMode(app.ViewSupernaturalAbility.ModeEdit);
+          } else {
+            views[x].setMode(app.ViewSupernaturalAbility.ModeView);
+          }
+          
+          views[x].render();
+        }
+      }
+      
     }
-
-    event.preventDefault();
-  },
-
-  abilityAdd: function (event) {
-    
-    var data = $(event.currentTarget).data();
-
-    var view = new app.ViewDialogAbilitySelector({model:this.model});
-    view.setAbilityType(data['abilityType']);
-    
-
-    var newSlot = 0;
-    if (data.abilityType == 'power') {
-      var slotCount = _.max(_.keys(this.model.getPowers()));
-      newSlot = slotCount + 1;
-    } else {
-      var slotCount = _.max(_.keys(this.model.getAspects()));
-      newSlot = slotCount + 1;
-    }
-    view.setSlot(newSlot); 
-
-    app.dispatcher.trigger('ui.show_dialog', view);
-
-
-       
-
-    event.preventDefault();
-  },
-
-  abilityDelete: function (event) {
-
-    var container = $(event.currentTarget).parents('.abilityBox');
-    container.children('.deleteBox').css('display', 'block');
-    container.children('.fauxlink.delete, .fauxlink.ability').css('display', 'none');
-
-    event.preventDefault();
-  },
-
-  abilityDeleteConfirm: function (event) {
-
-    var data = $(event.currentTarget).data();
-    if (data.abilityType == 'power') {
-      this.model.removePowerBySlot(data.abilitySlot);
-    } else {
-      this.model.removeAspectBySlot(data.abilitySlot);
-    }
-
-    event.preventDefault();
-  },
-
-  abilityDeleteCancel: function (event) {
-
-    var container = $(event.currentTarget).parents('.abilityBox');
-    container.children('.deleteBox').css('display', 'none');
-    container.children('.fauxlink.delete, .fauxlink.ability').css('display', 'block');
 
     event.preventDefault();
   },
@@ -129,35 +64,28 @@ app.ViewTabAbilities = Backbone.View.extend({
   },
 
   render: function() {
-    
+
     var powers      = this.model.getPowers();
     var aspects     = this.model.getAspects();
     var specialties = this.model.getSpecialties();
 
-    var container = $(this.el);
+    // clear out bogus child views
+    this.resetViewStack();
 
     var html = '';
 
     html += '<div class="wrapper">';  
 
     html += '<div class="statBlock abilityBoxContainer first">';
-    html += ' <div class="statBlockTitle">Powers<div class="fauxlink statBlockEdit" data-ability-type="power">Edit</div></div>';
-    for (var slot in powers) {
-      html += this.renderAbilityRow(slot, powers[slot], true);
-    }
-    html += this.renderAbilityRow('new', false, true);
-
-    html += ' <div class="abilityDescription">A human can use powers at will, but the rider will awaken.</div>';    
-
+    html +=   '<div class="statBlockTitle">Powers<div class="fauxlink statBlockEdit" data-ability-type="power">Edit</div></div>';
+    html +=   '<div class="powers"></div>';
+    html +=   '<div class="abilityDescription">A human can use powers at will, but the rider will awaken.</div>';    
     html += '</div>';
 
 
     html += '<div class="statBlock abilityBoxContainer">';
     html += ' <div class="statBlockTitle">Aspects<div class="fauxlink statBlockEdit" data-ability-type="aspect">Edit</div></div>';
-    for (var slot in aspects) {
-      html += this.renderAbilityRow(slot, aspects[slot], false);
-    }   
-    html += this.renderAbilityRow('new', false, false);    
+    html +=   '<div class="aspects"></div>'; 
     html += ' <div class="abilityDescription">A human must bargain to use aspects. The price will be steep, because the rider will weaken.</div>';    
     html += '</div>';
 
@@ -183,51 +111,80 @@ app.ViewTabAbilities = Backbone.View.extend({
 
     html += '</div>';
 
-    container.html(html);
+    $(this.el).html(html);
+
+    // loop through powers, add appropriate views
+    for (var slot in powers) {
+        var abilityUniqueId = powers[slot];
+        var abilityModel = (abilityUniqueId) ? registry.getSupernaturalAbility(abilityUniqueId, this.model.getCharacterType()) : false;
+
+        var abilityView = new app.ViewSupernaturalAbility({'model':this.model});        
+        abilityView.setAbilityModel(abilityModel);
+        abilityView.setSlot(slot);
+        abilityView.setIsPower(true);
+        this.appendToViewStack(abilityView, app.ModelSupernaturalAbility.AbilityTypePower);
+        $('.powers', this.el).append(abilityView.render().el);
+        
+    }
+
+    // 'new' slot
+    var abilityView = new app.ViewSupernaturalAbility({'model':this.model});        
+    abilityView.setIsNew(true);
+    abilityView.setIsPower(true);
+    $('.powers', this.el).append(abilityView.render().el);
+    this.appendToViewStack(abilityView, app.ModelSupernaturalAbility.AbilityTypePower);
+
+
+    // loop through aspects, add appropriate views
+    for (var slot in aspects) {
+        var abilityUniqueId = aspects[slot];
+        var abilityModel = (abilityUniqueId) ? registry.getSupernaturalAbility(abilityUniqueId, this.model.getCharacterType()) : false;
+
+        var abilityView = new app.ViewSupernaturalAbility({'model':this.model});        
+        abilityView.setAbilityModel(abilityModel);
+        abilityView.setSlot(slot);
+        abilityView.setIsPower(false);
+
+        $('.aspects', this.el).append(abilityView.render().el);
+        this.appendToViewStack(abilityView, app.ModelSupernaturalAbility.AbilityTypeAspect);
+    }
+
+    // 'new' slot
+    var abilityView = new app.ViewSupernaturalAbility({'model':this.model});        
+    abilityView.setIsNew(true);
+    abilityView.setIsPower(false);
+    $('.aspects', this.el).append(abilityView.render().el);
+    this.appendToViewStack(abilityView, app.ModelSupernaturalAbility.AbilityTypeAspect);
 
     return this;    
   },
 
-  renderAbilityRow: function (abilitySlot, abilityUniqueId, isPower) {
-     
-      var abilityModel = (abilityUniqueId) ? registry.getSupernaturalAbility(abilityUniqueId, this.model.getCharacterType()) : false;
-      var isNew = (abilitySlot == 'new');
-      var html = '';
-
-      html += '<div class="abilityBox ' + (isNew ? 'new' : '') +'" data-ability-slot="' + abilitySlot +'">';
-
-      html += '<div class="fauxlink action ' + (isNew ? 'add' : 'delete') + '" data-ability-slot="' + abilitySlot +'" data-ability-type="' + (isPower ? 'power' : 'aspect') + '" ' + (abilityModel ? 'data-unique-id="' + abilityModel.getUniqueId() + '"' : '') + '></div>';
-
-      html += '<div class="fauxlink ability" data-ability-slot="' + abilitySlot +'" data-ability-type="' + (isPower ? 'power' : 'aspect') + '" ' + (abilityModel ? 'data-unique-id="' + abilityModel.getUniqueId() + '"' : '') + '>';
-      if (abilityModel) {
-
-          html += '<div class="name">' + abilityModel.getName(this.model.getCharacterType()) + ' (' + abilityModel.getTactic(this.model.getCharacterType()) + ') ' + abilityModel.getNumDice(this.model) + 'd </div>';
-          html += '<div class="shortDesc">' + abilityModel.getShortDescription() + '</div>';
-
-      } else {
-          html += '<div class="name">Tap to add ' + (isPower ? 'a power' : 'an aspect') + '</div>';
-          html += '<div class="shortDesc"></div>';
+  resetViewStack: function () {
+    for (var abilityType in this.views) {
+      for (var x in this.views[abilityType]) {
+        if (this.views[abilityType][x].abilityModel && (!this.model.hasPower(this.views[abilityType][x].abilityModel.getUniqueId()) && !this.model.hasAspect(this.views[abilityType][x].abilityModel.getUniqueId()))) {
+          this.views[abilityType][x].close();
+          this.views[abilityType].splice(x, 1);
+        }
       }
-      html += '</div>';
-
-      if (abilityModel) {
-        html += '<div class="deleteBox" style="display:none;">';
-        html += '   <b>Remove ' + abilityModel.getName() + '?</b>';
-
-        html += '   <div class="fauxlink deleteCancel">';
-        html += '     Cancel';
-        html += '   </div>';
-
-        html += '   <div class="fauxlink deleteConfirm" data-ability-slot="' + abilitySlot +'" data-ability-type="' + (isPower ? 'power' : 'aspect') + '">';
-        html += '     Delete';
-        html += '   </div>';
-        
-        html += '</div>';
-      }
-
-      html += '</div>'; // end abilityBox
-
-      return html;
+    }
   },
+
+  appendToViewStack: function (view, abilityType) {
+
+
+    // update existing views
+    for (var x in this.views[abilityType]) {
+      if (this.views[abilityType][x].getIsNew() && view.getIsNew()) {
+      } else if (this.views[abilityType][x].abilityModel && view.abilityModel && this.views[abilityType][x].abilityModel.getUniqueId() == view.abilityModel.getUniqueId()) {
+          this.views[abilityType][x] = view;
+          return true;
+      }
+    }
+
+    // if it doesn't exist, add it to the stack
+    this.views[abilityType].push(view);
+    return true;
+  }
 
 });

@@ -11,6 +11,8 @@ app.ViewTactic = Backbone.View.extend({
         'click .fauxlink': 'clickStatButton',
     },
 
+    className: 'tacticContainer',
+
     clickStatButton: function (event) {
 
         var data = $(event.currentTarget).data();
@@ -101,34 +103,53 @@ app.ViewTactic = Backbone.View.extend({
 
     render: function() {        
 
-        var html = '';
-       
-        html += '<div class="tacticContainer ' + (this.isStrategy ? 'strategy' : '') + '">';
-        html += '   <div class="statGoodLabel">' + this.statGood + (this.primaryStrategy == this.statGood ? '*' : '') + '</div>';
-        html += '   <div class="statEvilLabel">' + this.statEvil + (this.primaryStrategy == this.statEvil ? '*' : '') + '</div>';
+        var goodDescription = this.model.getStatDescription(this.statGood);
+        var evilDescription = this.model.getStatDescription(this.statEvil);
+        var goodDice        = this.model.getNumDice(this.statGood);
+        var evilDice        = this.model.getNumDice(this.statEvil);
 
-        // evil stat
-        html += '   <div class="tacticSide evil">';
-        html += '       <div class="fauxlink decrement" data-action="decrement" data-stat="' + this.statEvil + '">-</div>';
+        var html = '';
+
+        if (this.isStrategy) {
+            $(this.el).addClass('strategy');
+        }
        
-        html += '       <div class="statBar">';
-        //html += '          <div class="stat" style="width:' + ((statEvilValue / 5) * 100) + '%"></div>';
-        html += '       </div>';
-        html += '       <div class="fauxlink increment" data-action="increment" data-stat="' + this.statEvil + '">+</div>';
-        html += '       <div class="fauxlink slide" data-action="slide" data-stat="' + this.statEvil + '">slide &raquo;</div>';
-        html += '   </div>';
+
+        html += '<div class="statLabel statEvilLabel">';
+        html +=     this.statEvil + (this.primaryStrategy == this.statEvil ? '*' : '');
+        if (!this.isStrategy) {
+          //  html +=     '<div class="dice">' + goodDice + 'd</div>';    
+        }
+        if (goodDescription) {
+            html +=     '<div class="description">' + goodDescription + '</div>';
+        }
+        html += '</div>';
 
         // good stat
-        html += '   <div class="tacticSide good">';
-        html += '       <div class="fauxlink decrement" data-action="decrement" data-stat="' + this.statGood + '">-</div>';
-        html += '       <div class="statBar">';
-        //html += '         <div class="stat" style="width:' + ((statGoodValue / 5 ) * 100) + '%"></div>';
-       
-        html += '       </div>';
-        html += '       <div class="fauxlink increment" data-action="increment" data-stat="' + this.statGood + '">+</div>';
-        html += '       <div class="fauxlink slide" data-action="slide" data-stat="' + this.statGood + '">&laquo; slide</div>';
-        html += '   </div>';
+        html += '<div class="tacticSide good">';
+        html +=     '<div class="fauxlink decrement" data-action="decrement" data-stat="' + this.statGood + '">-</div>';
+        html +=     '<div class="statBar"></div>';
+        html +=     '<div class="fauxlink increment" data-action="increment" data-stat="' + this.statGood + '">+</div>';
+        html +=     '<div class="fauxlink slide" data-action="slide" data-stat="' + this.statGood + '">&raquo; slide</div>';
+        html += '</div>';
 
+        // evil stat
+        html += '<div class="tacticSide evil">';
+        html +=     '<div class="fauxlink decrement" data-action="decrement" data-stat="' + this.statEvil + '">-</div>';
+    
+        html +=     '<div class="statBar"></div>';
+        html +=     '<div class="fauxlink increment" data-action="increment" data-stat="' + this.statEvil + '">+</div>';
+        html +=     '<div class="fauxlink slide" data-action="slide" data-stat="' + this.statEvil + '">slide &laquo;</div>';
+        html += '</div>';        
+
+        html += '<div class="statLabel statGoodLabel">';
+        if (evilDescription) {
+            html +=     '<div class="description">' + evilDescription + '</div>';    
+        }
+        if (!this.isStrategy) {
+         //   html +=     '<div class="dice">' + evilDice + 'd</div>';    
+        }
+        html +=     this.statGood + (this.primaryStrategy == this.statGood ? '*' : '');
         html += '</div>';
 
         $(this.el).html(html);

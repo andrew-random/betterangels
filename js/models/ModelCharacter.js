@@ -14,7 +14,8 @@ app.ModelCharacter = Backbone.Model.extend({
 		'character_type': '',					// string 	'angel', 'demon', 'human', 'other'
 		'description' 	: '',					// string 	Character description
 		'notes'			: '',					// string 	Player notes.	
-		'rider_name'	: '',					// string 	rider name
+		'stage_name'	: '',					// string	Stage name
+		'rider_name'	: '',					// string 	Rider name
 		'rider_strategy': null,					// string 	rider's focus strategy
 		'powers'		: {},					// array 	powers
 		'aspects'		: {},					// array 	aspects
@@ -36,7 +37,6 @@ app.ModelCharacter = Backbone.Model.extend({
 			this.setPlayerName(characterData.player_name, false);
 			this.setCharacterName(characterData.character_name, false);
 			this.setCharacterType(characterData.character_type, false);
-			this.setIsNpc(characterData.is_npc, false);
 			this.setDescription(characterData.description, false);
 			this.setNotes(characterData.notes, false);
 			this.setRiderName(characterData.rider_name, false);
@@ -180,6 +180,13 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.get('player_name');
 	},
 	
+	setStageName: function (value, hasChanged) {
+		this.set('stage_name', value, (hasChanged ? {silent:true} : null));
+	},
+	getStageName: function () {
+		return this.get('stage_name');
+	},
+
 	setRiderName: function (value, hasChanged) {
 		this.set('rider_name', value, (hasChanged ? {silent:true} : null));
 	},
@@ -201,11 +208,11 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.get('character_type');
 	},
 
-	setIsNpc: function (value, hasChanged) {
-		this.set('is_npc', value, (hasChanged ? {silent:true} : null));
+	isDemon: function () {
+		return this.getCharacterType() == 'demon';
 	},
-	getIsNpc: function () {
-		return this.get('is_npc');
+	isAngel: function () {
+		return this.getCharacterType() == 'angel';
 	},
 	
 	setDescription: function (value, hasChanged) {
@@ -399,12 +406,71 @@ app.ModelCharacter = Backbone.Model.extend({
 		}
 		return false;
 	},
+
+	getStatDescription: function (statName) {
+
+		var descriptions = {};
+
+			// tactic
+		descriptions[app.ModelCharacter.statGenerosity] = 'payoffs, bribes, status, resources';
+		descriptions[app.ModelCharacter.statGreed] = 'steal cars, pick locks, forgery';
+
+		descriptions[app.ModelCharacter.statKnowledge] = 'quick fix, jury-rig, education';
+		descriptions[app.ModelCharacter.statEspionage] = 'spot an ambush, reconstruct a crime scene';
+
+		descriptions[app.ModelCharacter.statCourage] = 'fair gunfight, fair fistfight';
+		descriptions[app.ModelCharacter.statCruelty] = 'shoot the unarmed, beat on the inferior';
+
+		descriptions[app.ModelCharacter.statEndurance] = 'car chase, balance, run a marathon';
+		descriptions[app.ModelCharacter.statCowardice] = 'avoid or escape, smash obstacles';
+
+		descriptions[app.ModelCharacter.statHonesty] = 'stand by the truth';
+		descriptions[app.ModelCharacter.statDeceit] = 'tell lies, stand by your wicked ways';
+
+		descriptions[app.ModelCharacter.statNurture] = 'persuade with decency, see someone\'s best';
+		descriptions[app.ModelCharacter.statCorruption] = 'persuade sinfully, know devious motives';
+
+		return descriptions[statName];
+	},
 	
+	getNumDice: function (tactic) {
+
+		var strategies 	= this.getStrategiesFormatted();
+		var parent 		= 'NOT FOUND';
+		for (var x in strategies) {
+
+			if (tactic == strategies[x].evil) {
+				parent = strategies[x].evil;
+			} else if (tactic == strategies[x].good) {
+				parent = strategies[x].good;
+			}
+
+			// children
+			for (var y in strategies[x].children) {
+
+				if (tactic == strategies[x].children[y].evil) {
+					parent = strategies[x].evil;
+				} else if (tactic == strategies[x].children[y].good) {
+					parent = strategies[x].good;
+				}
+			}
+
+		}
+
+		return this.getStatValue(parent) + this.getStatValue(tactic);
+	},
 	
 	addPower: function (slot, value) {
-		var powers = this.get('powers');
-		powers[slot] = value;
 
+		var powers = this.get('powers');
+		if (slot == 'new') {
+			if (_.size(powers) > 0) {
+				slot = parseInt(_.max(_.keys(powers))) + 1;
+			} else {
+				slot = 0;
+			}
+		}
+		powers[slot] = value;
 		this.setPowers(powers);
 	},
 	getPowerBySlot: function (slot) {
@@ -414,7 +480,6 @@ app.ModelCharacter = Backbone.Model.extend({
 	removePowerBySlot: function (slot) {
 		var powers = this.get('powers');
 		delete powers[slot];
-
 		this.setPowers(powers);
 	},
 	hasPower: function (value) {
@@ -443,12 +508,16 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.get('powers');
 	},
 
-
-	
 	addAspect: function (slot, value) {
 		var aspects = this.get('aspects');
+		if (slot == 'new') {
+			if (_.size(aspects) > 0) {
+				slot = parseInt(_.max(_.keys(aspects))) + 1;
+			} else {
+				slot = 0;
+			}
+		}
 		aspects[slot] = value;
-
 		this.setAspects(aspects);
 	},
 	getAspectBySlot: function (slot) {
@@ -515,6 +584,13 @@ app.ModelCharacter = Backbone.Model.extend({
 		return this.get('specialties');
 	},
 
+	setImageType: function (value, hasChanged) {
+		this.set('image_type', value, (hasChanged ? {silent:true} : null));
+	},
+	getImageType: function (value, hasChanged) {
+		return this.get('image_type');
+	},
+
 	setImageUrl: function (value, hasChanged) {
 		this.set('image_url', value, (hasChanged ? {silent:true} : null));
 	},
@@ -523,6 +599,14 @@ app.ModelCharacter = Backbone.Model.extend({
 	},
 	hasImageUrl: function () {
 		return this.get('image_url') !== null && this.get('image_url') != '';
+	},
+
+	getImageUrlFormatted: function () {
+		if (this.getImageType() == app.ModelCharacter.imageTypeGallery) {
+			return 'img/characters/' + this.getImageUrl();
+		} else  {
+			return this.getImageUrl();
+		}
 	},
 
 	setIsPregen: function (value, hasChanged) {
@@ -689,3 +773,7 @@ app.ModelCharacter.statDeceit			= 'Deceit';
 // tactic
 app.ModelCharacter.statNurture			= 'Nurture';
 app.ModelCharacter.statCorruption		= 'Corruption';
+
+// tactic
+app.ModelCharacter.imageTypeFacebook	= 'facebook';
+app.ModelCharacter.imageTypeGallery		= 'gallery';

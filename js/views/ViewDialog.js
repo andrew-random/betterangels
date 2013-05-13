@@ -3,6 +3,7 @@ app.ViewDialog = Backbone.View.extend({
   isVisible     : false,  // boolean
   activeDialog  : false,  // currently active dialog view
   dialogSize    : '',
+  title         : 'Default Title',
 
   initialize: function (options) {
     app.dispatcher.on('ui.show_dialog', this.showDialog, this);
@@ -21,10 +22,20 @@ app.ViewDialog = Backbone.View.extend({
     this.activeDialog = viewObject;
   },
 
+  getTitle: function () {
+    return this.title;
+  },
+
 
   show: function (event) {
+    // overlay
+    $('#appOverlay').addClass('active');
+
+    // dialog box
     $('#appDialog').prop('className', 'active');
-    $('#appDialogContent').prop('className', this.dialogSize);
+
+    // content
+    $('#appDialog').addClass(this.dialogSize);
 
     if (event) {
       event.preventDefault();
@@ -45,6 +56,10 @@ app.ViewDialog = Backbone.View.extend({
       this.activeDialog.close();
     }
 
+    // overlay
+    $('#appOverlay').removeClass('active');
+
+    // dialog box
     $('#appDialog').removeClass('active');
 
     if (event) {
@@ -53,6 +68,8 @@ app.ViewDialog = Backbone.View.extend({
   },
 
   render: function () {
+    $('#appDialogHeader span').html(this.activeDialog.getTitle());
+
     $('#appDialogContent', this.el).html(this.activeDialog.render().el);
   }
 

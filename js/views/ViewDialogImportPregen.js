@@ -7,6 +7,8 @@ app.ViewDialogImportPregen = app.ViewDialog.extend({
 		'click .import' 					: 'import',
 	},
 
+	title: 'Import Pregen NPC?',
+
 	import: function (event) {
 
 		if (!app.hasFBSession()) {
@@ -42,7 +44,6 @@ app.ViewDialogImportPregen = app.ViewDialog.extend({
 	  
 	    var html = '';
 
-	    html += '<h1>Import Pregen NPC?</h1>';
 	    html += '<p>Do you want to make a copy of <b>' + this.model.getRiderName() + '/' + this.model.getCharacterName() + '</b>?</p><p>If not, your changes cannot be saved.</p>';
 
 	    html += '<div class="controls two_buttons">';

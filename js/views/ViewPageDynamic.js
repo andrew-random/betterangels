@@ -3,7 +3,7 @@ app.ViewPageDynamic = app.ViewPage.extend({
 	className: 'page dynamic',
 
 	events: {
-		'click .fauxlink.children' : 'clickChildPage',
+		'click .fauxlink.menuItem' : 'clickChildPage',
 	},
 
 	initialize: function () {
@@ -62,12 +62,17 @@ app.ViewPageDynamic = app.ViewPage.extend({
 		html += '	<h1>' + this.title + '</h1>';
 		html += '	<div class="body">' + this.body + '</div>';
 
-		for (var pageId in this.children) {
-			var childPageData = app.ControllerPage.getPageDataById(this.children[pageId]);
-			html += '	<div class="fauxlink children" data-alias="' + childPageData['alias'] + '">';
-			html += '		<div><p>' + childPageData['title'] + '</p></div>';
-			html += '	</div>';
+		if (this.children.length > 0) {
+			html += 	'<div class="menu">';
+			for (var pageId in this.children) {
+				var childPageData = app.ControllerPage.getPageDataById(this.children[pageId]);
+				html += '	<div class="fauxlink menuItem" data-alias="' + childPageData['alias'] + '">';
+				html += '		<span>' + childPageData['title'] + '</span>';
+				html += '	</div>';
+			}
+			html += 	'</div>';
 		}
+				
 		html += '</div>';
 		container.html(html);
 

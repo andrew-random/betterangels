@@ -91,3 +91,6 @@ app.ModelSupernaturalAbility = Backbone.Model.extend({
 	}
 
 });
+
+app.ModelSupernaturalAbility.AbilityTypeAspect = 'aspect';
+app.ModelSupernaturalAbility.AbilityTypePower 	= 'power';

@@ -20,7 +20,7 @@ var registry = {
 				if (power_type == 'aspect') {
 					
 					var abilityModel = new app.ModelSupernaturalAbility(ability);
-					abilityModel.setAbilityType('aspect');
+					abilityModel.setAbilityType(app.ModelSupernaturalAbility.AbilityTypeAspect);
 
 					if (abilityModel.getGoodTactic()) {
 						this.supernaturalAbilities.angelAspects.add(abilityModel);
@@ -32,7 +32,7 @@ var registry = {
 				} else {
 
 					var abilityModel = new app.ModelSupernaturalAbility(ability);
-					abilityModel.setAbilityType('power');
+					abilityModel.setAbilityType(app.ModelSupernaturalAbility.AbilityTypePower);
 
 					if (abilityModel.getGoodTactic()) {
 						this.supernaturalAbilities.angelPowers.add(abilityModel);

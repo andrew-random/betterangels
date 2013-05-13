@@ -58,7 +58,7 @@ app.ViewDialogAbilitySelector = app.ViewDialog.extend({
 	getAbilitiesByGroup: function () {
 		var data = {};
 		var self = this; // scope hack
-		var abilityCollection = (this.abilityType == 'power' ? registry.getAllPowers(this.model.getCharacterType()) : registry.getAllAspects(this.model.getCharacterType()));
+		var abilityCollection = (this.abilityType == app.ModelSupernaturalAbility.AbilityTypePower ? registry.getAllPowers(this.model.getCharacterType()) : registry.getAllAspects(this.model.getCharacterType()));
 		abilityCollection.each(function (abilityModel) {
 			var tactic = abilityModel.getTactic(self.model.getCharacterType());
 			if (typeof data[tactic] == 'undefined') {
@@ -71,13 +71,15 @@ app.ViewDialogAbilitySelector = app.ViewDialog.extend({
 
 
 	saveChoice: function (event) {
+
 		var selectedAbility = this.getSelectedAbility();
 		if (selectedAbility) {
-			if (this.abilityType == 'power' && this.model.getPowerBySlot(this.slot) != selectedAbility) {
+
+			if (this.abilityType == app.ModelSupernaturalAbility.AbilityTypePower && this.model.getPowerBySlot(this.slot) != selectedAbility) {
 
 	        	this.model.addPower(this.slot, selectedAbility);	
 				
-			} else if (this.abilityType == 'aspect' && this.model.getAspectBySlot(this.slot) != selectedAbility) {
+			} else if (this.abilityType == app.ModelSupernaturalAbility.AbilityTypeAspect && this.model.getAspectBySlot(this.slot) != selectedAbility) {
 
 				this.model.addAspect(this.slot, selectedAbility);
 			}
@@ -118,6 +120,10 @@ app.ViewDialogAbilitySelector = app.ViewDialog.extend({
 		this.slot = value;
 	},
 
+	getTitle: function () {
+		return (this.abilityType == app.ModelSupernaturalAbility.AbilityTypePower ? 'Choose Power' : 'Choose Aspect');
+	},
+
 	render: function() {
 
 	    var container 				= $(this.el);
@@ -128,8 +134,6 @@ app.ViewDialogAbilitySelector = app.ViewDialog.extend({
 
 	    var html = '';
 	    var currentTactic = false
-
-	    html += '<h1>' + (this.abilityType == 'power' ? 'Choose Power' : 'Choose Aspect') + '</h1>';
 
 	    html += '<div class="abilityListContainer">';
 	    html += '	<div class="abilityList">';

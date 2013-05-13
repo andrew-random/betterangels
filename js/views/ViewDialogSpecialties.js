@@ -9,6 +9,8 @@ app.ViewDialogSpecialties = app.ViewDialog.extend({
 
 	className: 'ViewDialogSpecialties',
 
+	title: 'Choose Specialties',
+
 	textboxInput: function (event) {
 		var target = $(event.currentTarget);
 		this.specialties[parseInt(target.data('slot'))] = target.val();
@@ -37,8 +39,8 @@ app.ViewDialogSpecialties = app.ViewDialog.extend({
 	  	var specialties 	= this.model.getSpecialties();
 	    var html = '';
 	   	var count = 0;
-	   	
-	    html += '<h1>Choose Specialties</h1>';
+
+		var html = '';	   	
 	    html += '<div class="specialtyContent">';
 	    html += '	<p>Specialties are for things that most people don\'t even know enough to attempt. Nobody\'s going to defuse an A-bomb, pilot a B-52, translate hieroglyphics or perform an appendectomy without training.</p>';
 	    html += '	<p>You can have up to 3 specialties.<p>';

@@ -2,6 +2,8 @@ app.ViewDialogLoading = app.ViewDialog.extend({
 
 	className : 'ViewDialogLoading',
 
+	title 	  : 'Loading...',
+
 	dialogSize: app.ViewDialog.DialogSizeNarrow,
 
  	events: {

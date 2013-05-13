@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'AnimeAce2.0BBBold';
+    src: url('animeace2_bld.eot');
+    src: url('animeace2_bld.eot') format('embedded-opentype'),
+         url('animeace2_bld.woff') format('woff'),
+         url('animeace2_bld.ttf') format('truetype'),
+         url('animeace2_bld.svg#AnimeAce2.0BBBold') format('svg');
+}

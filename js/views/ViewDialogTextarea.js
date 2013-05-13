@@ -61,13 +61,12 @@ app.ViewDialogTextarea = app.ViewDialog.extend({
 
 	    var html = '';
 
-	    html += '	<h1>' + this.title + '</h1>';
-	    html += '		<div class="textareaWrapper">';
-		html += '		<textarea>' + this.textContent + '</textarea>';
-		html += '	</div>';
+	    html += '<div class="textareaWrapper">';
+		html += 	'<textarea>' + this.textContent + '</textarea>';
+		html +=	'</div>';
 
 	   	html += '<div class="controls one_button">';
-	   	html += '	<div class="fauxlink done">Done</div>';
+	   	html += 	'<div class="fauxlink done">Done</div>';
 	   	html += '</div>';
 
 	   	container.html(html);
