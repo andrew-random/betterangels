@@ -1,0 +1,127 @@
+.tabContainer {
+}
+.tabRow {
+	display:block;
+	list-style: none;
+	margin:0;
+	padding:0;
+	background: #333;
+	overflow: hidden;
+}
+.tabRow .tabHeader {
+	margin:0;
+	padding:0;
+	float:left;
+	list-style: none;
+	width:33%;
+
+	display: block;
+	color:#fff;
+	text-align: center;
+	line-height: 30px;
+
+	border-bottom:3px solid #b02817;
+	text-decoration: none;
+	font-family:AnimeAce2;
+}
+.tabRow .tabHeader.active {
+	background: #8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
+}
+.tabRow.two .tabHeader {
+	width:50%;
+	font-size: .7rem;	
+}
+.tabRow.three .tabHeader {
+	width:33%;
+	font-size: .7rem;
+}
+.tabRow.three .tabHeader:nth-child(2) {
+	width:34%;
+}
+
+.tabContent {
+	display: none;
+	width:100%;
+}
+.tabContent.active {
+	display: block;
+}
+
+
+/**************************
+* Sequential Tabs
+**************************/
+.sequentialTabs .tabRow {
+	border-radius: 10px;
+}
+.sequentialTabs .tabRow .tabHeader {
+	font-size: .5rem;
+	position: relative;
+}
+.sequentialTabs .tabRow .tabHeader:first-child {
+	border-radius: 10px 0 0 10px;
+}
+.sequentialTabs .tabRow .tabHeader:last-child {
+	border-radius: 0 10px 10px 0;
+}
+.sequentialTabs .tabRow .tabHeader.disabled {
+	color:#999;
+}
+.sequentialTabs .tabRow .tabHeader .tabBoundingBox {
+	position: absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	z-index: 15;
+}
+
+.sequentialTabs .tabRow .tabHeader .tabArrowLeft {
+	position: absolute;
+	left:0;
+	top:0;
+	width: 0; 
+	height: 0;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid #333;
+	z-index: 5;
+}
+.sequentialTabs .tabRow .tabHeader.active .tabArrowLeft {
+	border-left: 15px solid #333;
+}
+.sequentialTabs .tabRow .tabHeader:first-child .tabArrowLeft {
+	display: none;
+}
+
+.sequentialTabs .tabRow .tabHeader .tabArrowRight {
+	position: absolute;
+	right:-13px;
+	top:0;
+
+	width: 0; 
+	height: 0;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid #333;
+	z-index: 10;
+}
+.sequentialTabs .tabRow .tabHeader.active .tabArrowRight {
+	border-left: 15px solid #8e1000;
+}
+.sequentialTabs .tabRow .tabHeader:last-child .tabArrowRight {
+	display: none;
+}
+
+.sequentialTabs .tabContentContainer {
+	position: absolute;
+	top: 15%;
+	bottom:11%;
+	left:5%;
+	right:5%;
+	overflow: scroll;
+	-webkit-overflow-scrolling : touch;
+	user-select: none;
+	-webkit-transform: translate3d(0, 0, 0);
+}

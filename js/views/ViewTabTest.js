@@ -1,4 +1,4 @@
-app.ViewTabTest = Backbone.View.extend({
+app.ViewTabTest = app.ViewTab.extend({
 
 	name: null,
 

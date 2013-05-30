@@ -1,4 +1,4 @@
-app.ViewTabCharacterList = Backbone.View.extend({
+app.ViewTabCharacterList = app.ViewTab.extend({
 
 	characterCollection: null,
 

@@ -1,4 +1,4 @@
-app.ViewTabStrategy = Backbone.View.extend({
+app.ViewTabStrategy = app.ViewTab.extend({
 
 	views: [],
 

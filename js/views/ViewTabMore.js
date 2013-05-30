@@ -1,4 +1,4 @@
-app.ViewTabMore = Backbone.View.extend({
+app.ViewTabMore = app.ViewTab.extend({
 
 	events: {
 		'click .fauxlink.dialogTrigger' : 'showTextareaDialog',

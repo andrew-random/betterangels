@@ -2,7 +2,8 @@ app.ViewDialogFacebookSessionLost = app.ViewDialog.extend({
 
 	className : 'ViewDialogFacebookSessionLost',
 
-	title: 'Facebook login needed.',
+	title: 'Facebook login required',
+	dialogSize: app.ViewDialog.DialogSizeNarrow,
 
 	events: {
 		'click .cancel'	: 'hide',
@@ -22,7 +23,7 @@ app.ViewDialogFacebookSessionLost = app.ViewDialog.extend({
 
 	render: function () {
 
-		$(this.el).html('<p>Sorry for the inconvenience!<br /><br /> Please connect to Facebook to manage your characters.</p>');
+		$(this.el).html('<p>Please connect to Facebook to manage your characters.<br /><br />Sorry for the inconvenience!</p>');
 
 		this.loginButtonView = new app.ViewFacebookLoginButton();
       	$(this.el).append(this.loginButtonView.render().el);

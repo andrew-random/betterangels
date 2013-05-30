@@ -83,7 +83,7 @@ app.ModelSupernaturalAbility = Backbone.Model.extend({
 
 		}
 
-		return characterModel.getStatValue(parent) + characterModel.getStatValue(tactic);
+		return parseInt(characterModel.getStatValue(parent)) + parseInt(characterModel.getStatValue(tactic));
 	},
 
 	getAll: function () {

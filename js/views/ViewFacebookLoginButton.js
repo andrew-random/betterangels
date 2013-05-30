@@ -11,7 +11,7 @@ app.ViewFacebookLoginButton = Backbone.View.extend({
 		// queue an action to load the homepage when FB is complete.
       app.dispatcher.on('app.init_success', _.bind(function () {
           // load home page
-          $(this.el).html('Welcome, <b>' + app.getUser().getName() + '</b>');
+          $(this.el).html('<div class="facebookLoggedIn">Welcome, <b>' + app.getUser().getName() + '</b></div>');
 
       }, this));
 
@@ -22,7 +22,7 @@ app.ViewFacebookLoginButton = Backbone.View.extend({
          
           } else {
             var html = '';
-            html += '<div class="fauxlink facebookLogin">Login</div>';
+            html += '<div class="fauxlink facebookLogin">&nbsp;</div>';
             $(this.el).html(html);
 
           }
@@ -39,7 +39,7 @@ app.ViewFacebookLoginButton = Backbone.View.extend({
 
     facebookLogin: function (event) {
 
-      var config = {scope:'email,user_photos,friends_photos'};
+      var config = {scope:'email,user_photos'};
 
       // call login function
       FB.login(function () {}, config);
@@ -58,11 +58,11 @@ app.ViewFacebookLoginButton = Backbone.View.extend({
 
         } else if (app.hasFBSession()) {
 
-            html += 'Welcome, <b>' + app.getUser().getName() + '</b>';
+            html += '<div class="facebookLoggedIn">Welcome, <b>' + app.getUser().getName() + '</b></div>';
 
         } else {
 
-            html += '<div class="fauxlink facebookLogin">Login</div>';
+            html += '<div class="fauxlink facebookLogin">&nbsp;</div>';
 
         }
 

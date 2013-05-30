@@ -95,12 +95,12 @@ app.ViewDialogCharacterDetails = app.ViewDialog.extend({
 	    html += '</div>';
 
 		html += '<div class="formElement clear-block">';
-	    html += 	'<div class="formElementLabel">Host Name</div>';
+	    html += 	'<div class="formElementLabel">Host</div>';
 	    html += 	'<input type="text" value="' + this.model.getCharacterName() + '" data-attribute="character_name" />';
 		html += '</div>';
 
 		html += '<div class="formElement clear-block">';
-	    html += 	'<div class="formElementLabel" data-attribute="rider_name">' + (this.model.isDemon() ? 'Demon Name' : 'Angel Name') + '</div>';
+	    html += 	'<div class="formElementLabel" data-attribute="rider_name">' + (this.model.isDemon() ? 'Demon' : 'Angel') + '</div>';
 	    html += 	'<input type="text" value="' + this.model.getRiderName() + '" data-attribute="rider_name" />';
 		html += '</div>';
 	
@@ -125,7 +125,7 @@ app.ViewDialogCharacterDetails = app.ViewDialog.extend({
 		html += '</div>';
 
 		html += '<div class="formElement clear-block">';
-		html += '<div class="formElementLabel">Player Name</div>';		
+		html += '<div class="formElementLabel">Player</div>';		
 	    html += '<input type="text" value="' + this.model.getPlayerName() + '" data-attribute="player_name" />';
 		html += '</div>';
 

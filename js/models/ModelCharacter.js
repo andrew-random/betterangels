@@ -11,7 +11,7 @@ app.ModelCharacter = Backbone.Model.extend({
 		'fb_user_id'	: null,					// string	Facebook user id of character's owner 		
 		'player_name' 	: '',					// string 	player name,
 		'character_name': '',					// string 	character human name
-		'character_type': '',					// string 	'angel', 'demon', 'human', 'other'
+		'character_type': 'demon',				// string 	'angel', 'demon', 'human', 'other'
 		'description' 	: '',					// string 	Character description
 		'notes'			: '',					// string 	Player notes.	
 		'stage_name'	: '',					// string	Stage name
@@ -416,7 +416,7 @@ app.ModelCharacter = Backbone.Model.extend({
 		descriptions[app.ModelCharacter.statGreed] = 'steal cars, pick locks, forgery';
 
 		descriptions[app.ModelCharacter.statKnowledge] = 'quick fix, jury-rig, education';
-		descriptions[app.ModelCharacter.statEspionage] = 'spot an ambush, reconstruct a crime scene';
+		descriptions[app.ModelCharacter.statEspionage] = 'spot ambushes, reconstruct crimes';
 
 		descriptions[app.ModelCharacter.statCourage] = 'fair gunfight, fair fistfight';
 		descriptions[app.ModelCharacter.statCruelty] = 'shoot the unarmed, beat on the inferior';
@@ -457,7 +457,7 @@ app.ModelCharacter = Backbone.Model.extend({
 
 		}
 
-		return this.getStatValue(parent) + this.getStatValue(tactic);
+		return parseInt(this.getStatValue(parent)) + parseInt(this.getStatValue(tactic));
 	},
 	
 	addPower: function (slot, value) {

@@ -1,7 +1,8 @@
 var app = {
 
-	apiUrl	 			: 'http://cardboardshark.com/BA/api.php',	// url string where commands should be sent.
+	apiUrl	 			: 'http://www.arcdream.com/betterangelsapp/api.php',	// url string where commands should be sent.
 	appId 				: '266561183460054',
+
 	appView				: null,		// View - highest level app container view
 	dialogView			: null,		// View - highese level dialog container view
 	dispatcher			: null,		// Event handler
@@ -42,6 +43,11 @@ var app = {
             this.apiUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + 'api.php';
         }
 
+        // make sure we're at the right url
+        if (document.location.host.indexOf('andrew') == -1 && document.location.host.indexOf('www') == -1) {
+        	window.location = this.apiUrl.replace('api.php', '');
+        }
+
         // trigger FB 
         if (typeof FB != 'undefined') {
 
@@ -69,8 +75,9 @@ var app = {
 			// wave an error message
 			var errorMessage = {
 				'title': 'Contract unfulfilled',
-				'body': 'Facebook did not return required JS.',
-				'type': 'error'
+				'body': '<p>Facebook did not return required JS.<br /><br />Please check that your connection to the internet is still working.</p>',
+				'type': 'error',
+				'size': app.ViewDialog.DialogSizeNarrow
 			};
 			app.dispatcher.trigger('ui.show_dialog', new app.ViewDialogPHPMessage(errorMessage));
 

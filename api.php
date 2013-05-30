@@ -80,7 +80,7 @@
 					// Something went wrong! Throw the response into the messages array.
 					$messages[] = array(
 						'title'	=> 'Login error', 
-						'body' 	=> 'Database Failure.',
+						'body' 	=> (DEBUG_MODE ? mysql_error() : 'Database Failure.'),
 						'type' 	=> 'error',
 					);
 				}
@@ -113,17 +113,19 @@
 	if (!$userId) {
 		
 		$messages[] = array(
-			'title'	=> 'No session found.', 
+			'title'	=> 'No session found', 
 			'body' 	=> 'Please login to Facebook to access your characters.',
 			'type' 	=> 'error',
+			'size'	=> 'narrow'
 		);
 
 	} else if (!$localDB) {
 
 		$message[] = array(
-			'title'	=> 'Connection error.', 
+			'title'	=> 'Connection error', 
 			'body' 	=> 'Could not connect to DB.',
 			'type' 	=> 'error',
+			'size'	=> 'narrow'
 		);
 
 	} else {
@@ -202,7 +204,11 @@
 
 					$success = mysql_query($sql);
 					if (mysql_error()) {
-						$messages[] = array('title' => 'Error', 'body' => 'DB failure.');
+						$messages[] = array(
+							'title' => 'Error', 
+							'body' 	=> (DEBUG_MODE ? mysql_error() : 'Database Failure.'),
+							'type' 	=> 'error'
+						);
 					}
 				}
 				
@@ -215,7 +221,11 @@
 				$json['character'] = filterCharacterData(mysql_fetch_assoc($sql));
 
 				if (mysql_error()) {
-					$messages[] = array('title' => 'Error', 'body' => 'DB Failure');
+					$messages[] = array(
+						'title' => 'Error', 
+						'body' 	=> (DEBUG_MODE ? mysql_error() : 'Database Failure.'),
+						'type' 	=> 'error'
+					);
 				}	
 				break;
 
@@ -239,7 +249,11 @@
 					$success = mysql_query($sql);
 					
 					if (mysql_error()) {
-						$messages[] = array('title' => 'Error', 'body' => 'DB Failure');
+						$messages[] = array(
+							'title' => 'Error', 
+							'body' 	=> (DEBUG_MODE ? mysql_error() : 'Database Failure.'),
+							'type' 	=> 'error'
+						);
 					}
 				}
 				
@@ -254,7 +268,7 @@
 	
 	$json['success'] 	= $success;
 
-	echo @json_encode($json, JSON_NUMERIC_CHECK);
+	echo @json_encode($json);
 
 	if ($localDB) {
 		mysql_close($localDB);	
@@ -276,6 +290,10 @@
 			switch ($key) {
 				default:
 					$row[$key] = html_entity_decode($value);
+					break;
+
+				case 'is_pregen':
+					$row[$key] = (bool)$value;
 					break;
 
 				case 'created':

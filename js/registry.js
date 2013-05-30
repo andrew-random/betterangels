@@ -180,4 +180,26 @@ var registry = {
 		return data;
 	},
 
+	getImageSources: function () {
+		return {'facebook':'Facebook', 'gallery':'Gallery'};
+	},
+
+	getLocalGalleryImages: function () {
+		return [
+			'chae-jin-sook.jpg',
+			'doorman.jpg',
+			'everlove.jpg',
+			'gorillawrench.jpg',
+			'judge-attenborough.jpg',
+			'lifeshooter.jpg',
+			'lumos-pantera.jpg',
+			'mr-dignity.jpg',
+			'pavior.jpg',
+			'sea-change.jpg',
+			'shining-diamond.jpg',
+			'steven-stiles.jpg'
+		];
+
+	}
+
 }

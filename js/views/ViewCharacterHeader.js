@@ -23,7 +23,8 @@ app.ViewCharacterHeader = Backbone.View.extend({
     showImageDetails: function (event) {
 
         var view = new app.ViewDialogCharacterImage({model:this.model});
-
+        view.setImageType(this.model.getImageType());
+        view.setImageUrl(this.model.getImageUrl());
         app.dispatcher.trigger('ui.show_dialog', view);
 
         event.preventDefault();
@@ -44,7 +45,7 @@ app.ViewCharacterHeader = Backbone.View.extend({
         }
         html += '<div class="fauxlink image" ' + imageStyle + '></div>';
 
-        html += '<h1>' + (this.model.getRiderName() ? this.model.getRiderName() : 'Rider Name') + '</h1>';
+        html += '<h1>' + (this.model.getStageName() ? this.model.getStageName() : 'Stage Name') + '</h1>';
         html += '<h2>' + (this.model.getCharacterName() ? this.model.getCharacterName() : 'Character Name') + '</h2>';
         //html += '<h3>' + playerName + '</h3>';
 

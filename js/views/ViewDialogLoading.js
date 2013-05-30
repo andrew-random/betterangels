@@ -17,7 +17,14 @@ app.ViewDialogLoading = app.ViewDialog.extend({
 
 	render: function () {
 
-		var msgs = ['Loading...', 'Querying the dark heart of man...', 'Searching shadows...', 'Wandering the Earth, to and fro.', 'Searching...', 'Hunting...'];
+		var msgs = [
+			'Loading...', 
+			'Querying the dark heart of man...', 
+			'Searching shadows...', 
+			'Wandering the Earth, to and fro.', 
+			'Searching...', 
+			'Hunting...'
+		];
 
 		var loadingMessage = msgs[rand(0, msgs.length - 1)];
 

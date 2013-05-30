@@ -95,8 +95,8 @@ app.ViewSupernaturalAbility = Backbone.View.extend({
 		view.setSlot(this.slot);
 
 		if (this.abilityModel) {
-			view.setOldAbilityUniqueId(this.abilityModel.getUniqueId());
-			view.setSelectedAbility(this.abilityModel.getUniqueId());	
+			view.setTactic(this.abilityModel.getTactic(this.model.getCharacterType()), {trigger:false});
+			view.setSelectedAbility(this.abilityModel.getUniqueId(), {trigger:false});
 		}
 
 	    app.dispatcher.trigger('ui.show_dialog', view);
@@ -117,7 +117,7 @@ app.ViewSupernaturalAbility = Backbone.View.extend({
 				if (this.abilityModel) {
 					html += 	this.abilityModel.getName(this.model.getCharacterType()) + ' ';
 					html +=  	'(' + this.abilityModel.getTactic(this.model.getCharacterType()) + ') ';
-					html +=		this.abilityModel.getNumDice(this.model) + 'd ';	
+					html +=		'<span class="numDice">' + this.abilityModel.getNumDice(this.model) + 'd</span>';	
 				}
 				html += '</div>';
 				html += '<div class="shortDesc">';

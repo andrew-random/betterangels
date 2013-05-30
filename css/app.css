@@ -87,7 +87,9 @@ a:hover {
 	position: absolute;
 	left:0;
 	top:0;
-	width:50%;	
+	width:50%;
+	height: 6%;
+	display: table;
 }
 #appHeader #appStatus {
 	float:right;
@@ -98,15 +100,17 @@ a:hover {
 	float:right;
 	width:20%;
 	height:100%;
+	display: table;
 }
 
 /**********************
 * Header Elements Details
 **********************/
-#appHeader #appTitle {
+#appHeader #appTitle span {
+	display: table-cell;
+	vertical-align: middle;
 	font-size:.8rem;
 	font-variant: small-caps;
-	padding-top:2%;
 	text-indent: 2%;
 	color:#fff;
 }
@@ -114,12 +118,14 @@ a:hover {
 	text-align: right;
 	height:100%;
 }
-#appHeader #appBackButton {
+#appHeader #appBackButton span {
 	background: #eee;
 	color:#000;
 	text-decoration: none;
 	text-align: center;
 	padding-top:1.5%;
+	display: table-cell;
+	vertical-align: middle;
 }
 #appHeader #appStatus .icon {
 	display: inline-block;
@@ -218,6 +224,10 @@ a:hover {
 #appDialog.narrow #appDialogHeader {
 	height:10%;
 }
+#appDialog.wide #appDialogContent {
+	padding:0;
+}
+
 
 .fauxlink {
 	cursor:pointer;
@@ -243,41 +253,6 @@ h1.betterAngelsTitle b {
 .page.dynamic {
 	background:#fff url('../img/ui/fire-border.jpg') 0 100% no-repeat;
 	background-size: contain;
-}
-.page .menu {
-	text-align: center;
-	padding:10px 0;
-	border-radius:10px;	
-	background: #ccc;
-}
-.page .menu .menuItem {
-	background:#8e1000;
-	box-shadow: 2px 2px 2px 3px #c23624 inset;
-	text-align: center;
-	text-decoration: none;
-	line-height: 3rem;
-	display: table;
-	width: 94%;
-	margin-left:3%;
-	margin-bottom:5px;
-	color:#fff;
-	font-family:AnimeAce2;
-	font-size: .8rem;
-}
-.page .menu .menuItem:first-child {
-	border-radius: 10px 10px 0 0 ;
-}
-.page .menu .menuItem:last-child {
-	border-radius: 0 0 10px 10px;
-	margin-bottom: 0;
-}
-.page.dynamic .menu .menuItem {
-	font-size: .7rem;
-}
-.page .menu .menuItem span {
-	display: table-cell;
-	vertical-align: middle;
-	margin-left: 20%;
 }
 .page .wrapper {
 	padding:2% 5%;
@@ -324,55 +299,7 @@ h1.betterAngelsTitle b {
   	vertical-align: middle;
 }
 
-.tabContainer {
-}
-.tabRow {
-	display:block;
-	list-style: none;
-	margin:0;
-	padding:0;
-	background: #333;
-	overflow: hidden;
-}
-.tabRow .tabHeader {
-	margin:0;
-	padding:0;
-	float:left;
-	list-style: none;
-	width:33%;
 
-	display: block;
-	color:#fff;
-	text-align: center;
-	line-height: 30px;
-
-	border-bottom:3px solid #b02817;
-	text-decoration: none;
-	font-family:AnimeAce2;
-}
-.tabRow .tabHeader.active {
-	background: #8e1000;
-	box-shadow: 2px 2px 2px 3px #c23624 inset;
-}
-.tabRow.two .tabHeader {
-	width:50%;
-	font-size: .7rem;	
-}
-.tabRow.three .tabHeader {
-	width:33%;
-	font-size: .7rem;
-}
-.tabRow.three .tabHeader:nth-child(2) {
-	width:34%;
-}
-
-.tabContent {
-	display: none;
-	width:100%;
-}
-.tabContent.active {
-	display: block;
-}
 
 p {
 	margin:0;
@@ -384,9 +311,9 @@ textarea {
 }
 
 .userAccount {
-	margin-top:50px;
-	height:30px;
-	font-size: .9rem;
+	margin-top:13%;
+	margin-bottom:5%;
+	height:2rem;
 }
 
 .facebookStatus {
@@ -395,15 +322,13 @@ textarea {
 }
 .facebookStatus .facebookLogin {
 	display: block;
-	line-height: 35px;
-	border:1px solid #000;
-	text-align: center;
-	text-decoration:none;
-	width:245px;
-	background: blue;
-	color:#fff;
+	background: #fff url('../img/ui/facebook_login.png') 50% 50% no-repeat;
 	margin:0 auto;
-	border-radius: 10px;
+	background-size: contain;
+	font-size: 2rem;
+}
+.facebookStatus .facebookLoggedIn {
+	line-height: 2rem;
 }
 
 .characterHeader {
@@ -493,7 +418,6 @@ textarea {
 	padding-bottom: 10px;
 }
 .ViewCharacterEditor .tabContent.strategy .wrapper {
-	width:320px;
 	margin:0 auto;
 }
 
@@ -582,6 +506,10 @@ textarea {
 .abilityBox.new {
 	display: none;
 }
+.abilityBox .numDice {
+	float:right;
+	padding-right: 10px;
+}
 /**
  * Edit Mode
  */
@@ -592,6 +520,7 @@ textarea {
 }
 .abilityBox .shortDesc {
 	padding-left:10px;
+	padding-right:10px;
 	padding-bottom:5px;
 }
 .abilityBox .deleteBox {
@@ -656,7 +585,7 @@ textarea {
 	color:#999;
 	font-size: .6rem;
 	display: inline-block;
-	padding:0 5px;
+	padding:0 2%;
 	line-height: 1rem;
 }
 .tacticContainer.strategy {
@@ -664,17 +593,14 @@ textarea {
 }
 .tacticSide {
 	margin:5px 0;
-	height:33px;
+	height:2rem;
 }
-/*
-.tacticSide .statBar {
-	margin:0 10px;
-}*/
+
 .tacticSide.good {
-	padding-left:27px;
+	padding-left:10%;
 }
 .tacticSide.evil {
-	padding-right:27px;
+	padding-right:10%;
 }
 .tacticSide.evil .decrement {
 	margin-left: 0;
@@ -682,13 +608,16 @@ textarea {
 .tacticSide.good .decrement {
 	margin-right: 0;
 }
+.tacticSide .statBar {
+	width:48%;
+}
 .tacticSide .statBar .dotEmpty,
 .tacticSide .statBar .dotGood,
 .tacticSide .statBar .dotEvil {
 	float:right;
-	width:26px;
-	height:26px;
-	background-size: cover;
+	width:20%;
+	height:1.6rem;
+	background-size: contain;
 	background-repeat: no-repeat;
 }
 .tacticSide .statBar .dotEmpty {
@@ -704,12 +633,12 @@ textarea {
 .tacticSide .fauxlink {
 	display:block;
 	
-	height:24px;
-	width:24px;
+	height:1.5rem;
+	width:9%;
 	line-height: 22px;
 	text-align: center;
 
-	margin:0 5px;
+	margin:0 2%;
 	border: 1px solid #ccc;
 	background: #eee;
 	color:#000;
@@ -731,7 +660,7 @@ textarea {
 }
 .tacticSide .fauxlink.slide {
 	width:auto;
-	padding:0 10px;
+	padding:0 3%;
 	margin:0;
 }
 
@@ -763,78 +692,12 @@ textarea {
 #appDialog p {
 	margin:5px 0 5px 0;
 }
-#appDialog .abilityListContainer {
-	position: absolute;
-	left:5%;
-	top:8%;
-	bottom:12%;
-	width:26%;
-	height:auto;
-	overflow: auto;
-	-webkit-overflow-scrolling : touch;
-	user-select: none;
-	-webkit-transform: translate3d(0, 0, 0);
-	font-size:.7rem;
+#appDialog .abilityDetails .numDice {
+	float: right;
+	margin-right: 1%;
 }
-#appDialog .abilityList .abilityGroup {
-	margin-bottom:10px;
-}
-#appDialog .abilityList .abilityGroup.active {
-	color:#fff;
-}
-#appDialog .abilityList .abilityGroup .groupLabel {
-	display: block;
-	line-height: 25px;
-	text-decoration: none;
-	color:#000;
-	padding:0 0 0 5px;
-	border: 1px solid #000;
-	border-bottom:3px solid #666;
-}
-#appDialog .abilityList .abilityGroup.active .groupLabel {
-	background:#8e1000;
-	box-shadow: 2px 2px 2px 3px #c23624 inset;
-	color: #fff;
-}
-#appDialog .abilityList .fauxlink.ability {
-	display: none;
-	text-decoration: none;
-	color:#000;
-	padding:10px 0 10px 5px;
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
-	border-bottom:1px solid #ccc;
-	font-size:.6rem;
-	background: #eee;
-}
-#appDialog .abilityList .fauxlink.ability.last {
-	border-radius:0 0 10px 10px;
-	border-bottom:1px solid #000;
-}
-#appDialog .abilityList .abilityGroup.active .fauxlink.ability {
-	display:block;
-}
-#appDialog .abilityList .fauxlink.selected {
-	background: #fff;
-}
-#appDialog .abilityDetails {
-	position: absolute;
-	right:5%;
-	top:8%;
-	bottom:12%;
-	width:60%;
-	overflow: auto;
-	-webkit-overflow-scrolling : touch;
-	user-select: none;
-	-webkit-transform: translate3d(0, 0, 0);
-	font-size:.7rem;	
-}
-#appDialog .abilityDetails .abilityTitle {
-	font-size:1rem;
-	font-weight: bold;
-}
-#appDialog .abilityDetails .abilitySubTitle {
-	font-style: italic;
+#appDialog .abilityDetails p{
+	font-size: .8rem;
 }
 #appDialog .abilityDetails table {
 	border:1px solid #000;
@@ -842,11 +705,13 @@ textarea {
 }
 #appDialog .abilityDetails table td {
 	margin:0;
-	padding:10px;
+	padding:3%;
+	font-size: .8rem;
 }
 #appDialog .abilityDetails th {
 	font-weight: bold;
 	background: #eee;
+	font-size: .8rem;
 }
 #appDialog .controls {
 	position:absolute;
@@ -889,11 +754,11 @@ textarea {
 }
 
 #appDialog .formElement input[type="text"] {
-	width:260px;
 	font-size:.9rem;
+	width:100%;
 }
 #appDialog .formElement select {
-	width:260px;
+	width:100%;
 	font-size:.9rem;
 }
 #appDialog .formElementLabel {
@@ -906,9 +771,8 @@ textarea {
 #appDialog .formElement .radioButton {
 	float:left;
 	padding:5px;
-	margin:5px 10px 0 0;
 	border:1px solid #ccc;
-	width:45%;
+	width:48%;
 	text-decoration: none;
 	color:#000;
 }
@@ -916,7 +780,10 @@ textarea {
 	background:blue;
 	color:#fff;
 }
-
+#appDialog .formElement .radioButton:nth-child(2) {
+	float: right;
+	margin-right: 0;
+}
 
 .ViewCharacterList .tabContentContainer {
 	margin:0 auto;
@@ -1129,21 +996,57 @@ textarea {
 /**********************
 * Facebook Album Selector
 **********************/
-.facebookPhotoContainer {
-	position: absolute;
-	top:8%;
-	left:5%;
-	right:5%;
-	bottom:12%;
-	height:auto;
-	overflow: auto;
-
-	-webkit-overflow-scrolling : touch;
-	user-select: none;
-	-webkit-transform: translate3d(0, 0, 0);
+.currentCharacterImage {
+	text-align: center;
+	padding:10px 0;
+	border-radius:10px;	
+	background: #ccc;
+	margin-bottom:10px;
+}
+.currentCharacterImage .imageContainer {
+	height:150px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	margin:0 auto;
+}
+.imageGallery img {
+	width:32%;
+	margin-right:2%;
+	margin-bottom: 3%;
+	border:1px solid #ccc;
+	padding:2%;
+	float: left;
+}
+.imageGallery img:nth-child(3n+0) {
+	margin-right: 0;
+	float: right;
+}
+.imageGallery img.selected {
+	background: #8e1000;
+}
+.facebookPhotoContainer .loading {
+	text-align: center;
 }
 .facebookPhotoContainer .info {
 	font-size: .7rem;
+	padding-bottom:5px;
+	border-bottom: 1px solid #ccc;
+}
+
+.facebookPhotoContainer .fauxlink.back {
+	display: block;
+	text-align: center;
+	text-decoration:none;
+
+	color:#fff;
+	font-variant: small-caps;
+	line-height:2em;
+
+	background:#8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
+	margin-bottom: 10px;
+
 }
 .facebookPhotoContainer .fauxlink.album {
 	margin-bottom:2%;
@@ -1162,16 +1065,6 @@ textarea {
 .facebookPhotoContainer .fauxlink.album .privacy {
 	color:#333;
 	font-size: .8rem;
-}
-
-.facebookPhotoContainer .fauxlink.photo {
-	width:33%;
-	display: inline-block;
-}
-.facebookPhotoContainer .fauxlink.photo img {
-	padding:5%;
-	vertical-align: middle;
-	border:1px solid #ccc;
 }
 .error {
 	color:#ff0000;

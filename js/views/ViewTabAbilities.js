@@ -1,4 +1,4 @@
-app.ViewTabAbilities = Backbone.View.extend({
+app.ViewTabAbilities = app.ViewTab.extend({
 
   events: {
    // 'click .fauxlink.delete'          : 'abilityDelete',

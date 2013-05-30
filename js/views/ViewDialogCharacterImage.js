@@ -2,118 +2,87 @@ app.ViewDialogCharacterImage = app.ViewDialog.extend({
 
 	title: 'Select an Image',
 
-	selectedAlbum 	: false,
-	albumData 		: null,
-	albumDetails 	: null,
-
-	dialogSize: app.ViewDialog.DialogSizeDefault,
-
-	events: {	
-		'click .done' 					: 'hide',
-		'click .back' 					: 'backToTop',
-		'click .fauxlink.album'			: 'selectAlbum',
-		'click .fauxlink.photo'			: 'selectPhoto',
+	events: {
+		'click .fauxlink.cancel' 	: 'hide',
+		'click .fauxlink.save' 		: 'save',
 	},
 
-	backToTop: function () {
-		this.selectedAlbum = null;
-		this.render();
-	},
+	initialize: function (options) {
 
-	selectAlbum: function (event) {
-		var target = $(event.currentTarget);
-		this.selectedAlbum = target.data('albumId');
+		this.formOption = new app.ModelFormOptionCharacterImage();
 
-		$('.facebookPhotoContainer', this.el).html('<div class="loading">Loading</div>');
+		// add tabs
+		this.tabView = new app.ViewSequentialTabs();
+		this.tabView.addTab('source', 'Source', new app.ViewTabDialogCharacterImageSource({model:this.model, option:this.formOption}));
+		this.tabView.addTab('gallery', 'Gallery', new app.ViewTabDialogCharacterImageGallery({model:this.model, option:this.formOption}));
 
-		app.user.getFacebookAlbumDataById(
+		this.tabView.setChangeLocationOnClick(false);
+
+		// set the default
+		this.tabView.setActiveTab('source');
+
+		this.formOption.on('change', function () {
+			console.log('change check', this.formOption.hasChanged('image_source'), this.formOption.hasChanged('value'));
+			if (this.formOption.hasChanged('image_source')) {
+				console.log('source change');
+				// changing the source means that the image must be invalid.
+				//this.formOption.setValue(false, {silent:true});
+
+				this.tabView.updateTabRow();
+				this.tabView.showTab('gallery', true);
+			} else {
+
+				console.log('image change');
+				this.tabView.updateTabRow();
+				if (this.formOption.getValue()) {
+					this.tabView.showTab('source', true);
+				}
+			}
 			
-			this.selectedAlbum, 
 
-			_.bind(function (albumDetails) {
-				this.albumDetails = albumDetails;
-				this.render();
-			}, this),
+			
+		}, this);
 
-			_.bind(function (ajaxResp) {
-				//if (ajaxResp.statusText == 'Bad Request') {
-					$('.loading', this.el).replaceWith('<span class="error">Facebook did not return the requested Album.<br />There may be a permissions issue.</span>');
-					$('.controls .done').removeClass('done').addClass('cancel back').text('Back');
-				//}
-			}, this)
-		);
+		this.formOption.on('change:value', function () {
+			
+			
+		}, this);
 
-		event.preventDefault();
 	},
 
-	selectPhoto: function (event) {
-		var target = $(event.currentTarget);
-		this.model.setImageUrl(app.fbGetPhotoUrl(target.data('photoId'), 'thumbnail'));
-
-		event.preventDefault();
-
+	save: function () {
+		if (this.formOption.getValue()) {
+			this.model.setImageType(this.formOption.getImageSource());		
+			this.model.setImageUrl(this.formOption.getValue());	
+		}
 		this.hide();
+	},
+
+	setImageUrl: function (value) {
+		this.formOption.setValue(value, {silent:true});
+	},
+	getImageUrl: function () {
+		return this.formOption.getValue();
+	},
+
+	setImageType: function (value) {
+		this.formOption.setImageSource(value, {silent:true});
+	},
+	getImageType: function () {
+		return this.formOption.getImageSource();
 	},
 
 	render: function() {
 
-		// queue re-load if no album data is found
-		if (this.albumData === null) {
-			app.user.getFacebookAlbums(_.bind(function (albumData) {
-				this.albumData = albumData;
-				this.render();
-			}, this));	
-		}
+		$(this.el).html(this.tabView.render().el);
 
-	    var container 		= $(this.el);
-	  
-	    var html = '';
-	    
-	    html += '<div class="facebookPhotoContainer">';
-
-	    if (this.albumData === null) {
-			html += '<div class="loading">Loading</div>';
-	    } else {
-	    	if (!this.selectedAlbum) {
-
-	    		html += "<div class='info'>Only albums with expanded permissions are available from FB.</div>";
-				for (var x in this.albumData) {
-					//if (this.albumData[x].privacy == 'friends-of-friends') {
-			    		html += '<div class="fauxlink album clear-block" data-album-id="' + this.albumData[x].id + '">';
-			    		html += 	'<img src="' + app.fbGetPhotoUrl(this.albumData[x].cover_photo, 'thumbnail') + '" />';
-			    		html += '		<div class="name">';
-			    		html += '		' + this.albumData[x].name;
-			    		html += '		<div class="privacy">' + this.albumData[x].privacy + '</div>';
-			    		html += '	</div>';
-			    		html += '</div>';
-					//}
-					
-		    	}
-	    	} else {
-	    		for (var x in this.albumDetails) {
-	    			html += '<div class="fauxlink photo" data-photo-id="' + this.albumDetails[x].id + '">';
-	    			html += 	'<img src="' + app.fbGetPhotoUrl(this.albumDetails[x].id, 'thumbnail') + '" />';
-	    			html += '</div>';
-	    		}
-	       	}	
-	    }
-	    html += '</div>';
-
-	    if (!this.selectedAlbum) {
-		    html += '<div class="controls one_button">';
-		   	html += '	<div class="fauxlink done">Done</div>';
-		   	html += '</div>';	
-	    } else {
-	    	html += '<div class="controls two_buttons">';
-	    	html += '	<div class="fauxlink cancel back">Back</div>';
-		   	html += '	<div class="fauxlink done">Done</div>';
-		   	html += '</div>';	
-	    }
-	   	
-
-	   	container.html(html);
-
+		var html = '';
+		html += '<div class="controls two_buttons">';
+	   	html += '	<div class="fauxlink cancel">Cancel</div>';
+	   	html += '	<div class="fauxlink save">Select</div>';
+	   	html += '</div>';
+		$(this.el).append(html);
 
 	    return this;    
-	},	
+	},
 });

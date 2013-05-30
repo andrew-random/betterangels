@@ -1,0 +1,46 @@
+.menu {
+	text-align: center;
+	padding:10px 0;
+	border-radius:10px;	
+	background: #ccc;
+}
+.menu .menuItem {
+	background:#8e1000;
+	box-shadow: 2px 2px 2px 3px #c23624 inset;
+	text-align: center;
+	text-decoration: none;
+	line-height: 3rem;
+	display: table;
+	width: 94%;
+	margin-left:3%;
+	margin-bottom:5px;
+	color:#fff;
+	font-family:AnimeAce2;
+	font-size: .8rem;
+}
+.menu .menuItem:first-child {
+	border-radius: 10px 10px 0 0 ;
+}
+.menu .menuItem:last-child {
+	border-radius: 0 0 10px 10px;
+	margin-bottom: 0;
+}
+.menu .menuItem:first-child:last-child {
+	border-radius: 10px;
+}
+.page.dynamic .menu .menuItem {
+	font-size: .7rem;
+}
+.menu .menuItem span {
+	display: table-cell;
+	vertical-align: middle;
+	margin-left: 20%;
+}
+
+.sequentialTabs .menu .menuItem {
+	line-height: 2.6rem;
+}
+.sequentialTabs .menu .menuItem.inactive {
+	background: #666;
+	box-shadow: 2px 2px 2px 3px #eee inset;
+}

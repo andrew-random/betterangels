@@ -9,7 +9,7 @@ app.ViewDialog = Backbone.View.extend({
     app.dispatcher.on('ui.show_dialog', this.showDialog, this);
     app.dispatcher.on('ui.hide_dialog', this.hide, this);
 
-    $('#appDialogContent').prop('className', this.dialogSize);
+    $('#appDialogContent').prop('className', (this.activeDialog) ? this.activeDialog.dialogSize : '');
   },
 
   showDialog: function (viewObject) {
@@ -28,6 +28,7 @@ app.ViewDialog = Backbone.View.extend({
 
 
   show: function (event) {
+
     // overlay
     $('#appOverlay').addClass('active');
 
@@ -35,18 +36,14 @@ app.ViewDialog = Backbone.View.extend({
     $('#appDialog').prop('className', 'active');
 
     // content
-    $('#appDialog').addClass(this.dialogSize);
+    $('#appDialog').addClass(this.activeDialog.dialogSize);
+
+    // content container
+    $('#appDialogContent').prop('className', this.activeDialog.dialogSize);
 
     if (event) {
       event.preventDefault();
     }
-
-    // prevent focus from getting confused
-    /*setTimeout(function () {
-      if (document.activeElement) {
-        $(document.activeElement).blur();
-      }
-    }, 500);*/
     
   },
 
@@ -76,3 +73,4 @@ app.ViewDialog = Backbone.View.extend({
 });
 app.ViewDialog.DialogSizeDefault  = 'default';
 app.ViewDialog.DialogSizeNarrow   = 'narrow';
+app.ViewDialog.DialogSizeWide     = 'wide';

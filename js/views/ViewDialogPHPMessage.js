@@ -5,6 +5,7 @@ app.ViewDialogPHPMessage = app.ViewDialog.extend({
 	title: '',
 	body: '',
 	type: '',
+	dialogSize: '',
 
  	events: {
       'click .done'  : 'hide', 
@@ -14,6 +15,10 @@ app.ViewDialogPHPMessage = app.ViewDialog.extend({
     	this.title = options.title;
     	this.body = options.body;
     	this.type = options.type;
+    	if (options.size) {
+    		this.dialogSize = options.size;	
+    	}
+    	
     },
 
 	render: function () {
